@@ -7,6 +7,7 @@ import { useMemo, useRef, useState } from "react";
 import {
   ageQuestion,
   focusQuestion,
+  focusQuestionsByAge,
   learningPreferenceQuestion,
   parentHelpQuestion,
 } from "@/data/quiz";
@@ -63,6 +64,9 @@ export function QuizFunnel() {
   const [step, setStep] = useState<FunnelStep>("intro");
   const [answers, setAnswers] = useState<QuizAnswers>({});
   const result = useMemo(() => calculateResult(answers), [answers]);
+  const activeAge =
+    answers.primaryAge ||
+    (Array.isArray(answers.age) ? answers.age[0] : answers.age);
   const needsPrimaryAgeStep = (answers.age?.length ?? 0) > 1;
   const totalSteps = needsPrimaryAgeStep ? 6 : 5;
   const currentProgressStep =
@@ -120,7 +124,7 @@ export function QuizFunnel() {
 
   const handleSingleSelect = (
     questionId: "primaryAge" | "focus" | "parentHelp" | "learningPreference",
-    value: SingleAnswerValue,
+    value: SingleAnswerValue | string,
   ) => {
     setAnswers((current) => ({ ...current, [questionId]: value }));
   };
@@ -229,10 +233,10 @@ export function QuizFunnel() {
               questionIndex={needsPrimaryAgeStep ? 3 : 2}
               title={focusQuestion.title}
               subtext={focusQuestion.subtext}
-              options={focusQuestion.options.map((option) => ({
-                ...option,
-                selected: answers.focus === option.value,
-                onClick: () => handleSingleSelect("focus", option.value),
+              options={((activeAge && focusQuestionsByAge[activeAge]) || []).map((label) => ({
+                label,
+                selected: answers.focus === label,
+                onClick: () => handleSingleSelect("focus", label),
               }))}
               canContinue={canContinue}
               onBack={goToPreviousStep}

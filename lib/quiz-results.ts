@@ -1,4 +1,5 @@
 import {
+  focusWeightsByLabel,
   focusQuestion,
   getAgeOption,
   learningPreferenceQuestion,
@@ -66,6 +67,7 @@ export function calculateResult(answers: QuizAnswers): QuizResultContent {
 
   const ageOption = getAgeOption(answers.primaryAge || answers.age?.[0]);
   const focusOption = focusQuestion.options.find((option) => option.value === answers.focus);
+  const focusWeights = focusOption?.weights || (answers.focus ? focusWeightsByLabel[answers.focus as keyof typeof focusWeightsByLabel] : undefined);
   const parentHelpOption = parentHelpQuestion.options.find(
     (option) => option.value === answers.parentHelp,
   );
@@ -81,8 +83,8 @@ export function calculateResult(answers: QuizAnswers): QuizResultContent {
     }
   }
 
-  if (focusOption) {
-    for (const [type, score] of Object.entries(focusOption.weights) as [ResultType, number][]) {
+  if (focusWeights) {
+    for (const [type, score] of Object.entries(focusWeights) as [ResultType, number][]) {
       scores[type] += score * 1.5;
     }
   }

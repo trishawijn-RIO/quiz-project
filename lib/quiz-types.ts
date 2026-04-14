@@ -37,7 +37,7 @@ export type QuestionOption = {
 export type QuizAnswers = {
   age?: AgeGroupValue[];
   primaryAge?: AgeGroupValue;
-  focus?: SingleAnswerValue;
+  focus?: string;
   parentHelp?: SingleAnswerValue;
   learningPreference?: SingleAnswerValue;
 };

@@ -79,6 +79,71 @@ export const focusQuestion: QuestionDefinition = {
   ],
 };
 
+export const focusQuestionsByAge = {
+  age_0_2: [
+    "Mijn kind slaapt slecht en ik ben uitgeput",
+    "Mijn kind huilt veel en ik weet niet wat hij/zij nodig heeft",
+    "Mijn kind is snel overprikkeld en moeilijk rustig te krijgen",
+    "We hebben geen ritme en dat geeft onrust",
+    "Mijn kind kan moeilijk zonder mij",
+    "Ik twijfel vaak of ik het goed doe",
+  ],
+
+  age_3_5: [
+    "De driftbuien lopen compleet uit de hand",
+    "Mijn kind luistert niet",
+    "Alles wordt een strijd (aankleden, eten, naar bed)",
+    "Mijn kind test constant grenzen",
+    "Overgangen zorgen voor gedoe",
+    "Ik merk dat ik zelf sneller boos word dan ik wil",
+  ],
+
+  age_6_9: [
+    "Mijn kind luistert niet en discussieert veel",
+    "Mijn kind wordt snel boos of gefrustreerd",
+    "Mijn kind heeft weinig zelfvertrouwen",
+    "Mijn kind praat weinig over wat er speelt",
+    "School zorgt voor spanning of problemen",
+    "Er is veel gedoe met broertjes/zusjes",
+  ],
+
+  age_10_plus: [
+    "Mijn kind trekt zich terug en deelt weinig",
+    "We hebben steeds vaker discussie of conflict",
+    "Mijn kind accepteert grenzen slecht",
+    "Mijn kind is onzeker of somber",
+    "Er is gedoe met vrienden",
+    "Ik heb het gevoel dat ik mijn kind kwijtraakt",
+  ],
+} as const;
+
+export const focusWeightsByLabel = {
+  "Mijn kind slaapt slecht en ik ben uitgeput": { overprikkeling: 3, twijfel: 1 },
+  "Mijn kind huilt veel en ik weet niet wat hij/zij nodig heeft": { overprikkeling: 2, twijfel: 2 },
+  "Mijn kind is snel overprikkeld en moeilijk rustig te krijgen": { overprikkeling: 3, strijd: 1 },
+  "We hebben geen ritme en dat geeft onrust": { overprikkeling: 2, meebewegen: 1 },
+  "Mijn kind kan moeilijk zonder mij": { meebewegen: 3, twijfel: 1 },
+  "Ik twijfel vaak of ik het goed doe": { twijfel: 3, meebewegen: 1 },
+  "De driftbuien lopen compleet uit de hand": { strijd: 2, overprikkeling: 2 },
+  "Mijn kind luistert niet": { strijd: 3, meebewegen: 1 },
+  "Alles wordt een strijd (aankleden, eten, naar bed)": { strijd: 3, meebewegen: 1 },
+  "Mijn kind test constant grenzen": { strijd: 3, twijfel: 1 },
+  "Overgangen zorgen voor gedoe": { overprikkeling: 2, strijd: 1 },
+  "Ik merk dat ik zelf sneller boos word dan ik wil": { twijfel: 2, strijd: 1 },
+  "Mijn kind luistert niet en discussieert veel": { strijd: 3, meebewegen: 1 },
+  "Mijn kind wordt snel boos of gefrustreerd": { strijd: 2, overprikkeling: 1 },
+  "Mijn kind heeft weinig zelfvertrouwen": { twijfel: 3, meebewegen: 1 },
+  "Mijn kind praat weinig over wat er speelt": { meebewegen: 2, twijfel: 2 },
+  "School zorgt voor spanning of problemen": { overprikkeling: 2, twijfel: 1 },
+  "Er is veel gedoe met broertjes/zusjes": { strijd: 2, overprikkeling: 1 },
+  "Mijn kind trekt zich terug en deelt weinig": { meebewegen: 3, twijfel: 1 },
+  "We hebben steeds vaker discussie of conflict": { strijd: 2, meebewegen: 1 },
+  "Mijn kind accepteert grenzen slecht": { strijd: 3, meebewegen: 1 },
+  "Mijn kind is onzeker of somber": { twijfel: 3, overprikkeling: 1 },
+  "Er is gedoe met vrienden": { twijfel: 2, meebewegen: 1 },
+  "Ik heb het gevoel dat ik mijn kind kwijtraakt": { meebewegen: 3, twijfel: 1 },
+} as const;
+
 export const parentHelpQuestion: QuestionDefinition = {
   id: "parentHelp",
   title: "Wat zou jou als ouder nu het meest helpen?",
