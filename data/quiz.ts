@@ -1,0 +1,160 @@
+import type { AgeGroupValue, QuestionOption } from "@/lib/quiz-types";
+
+export type QuestionDefinition = {
+  id: string;
+  title: string;
+  subtext?: string;
+  multiSelect?: boolean;
+  options: QuestionOption[];
+};
+
+export const ageQuestion: QuestionDefinition = {
+  id: "age",
+  title: "Hoe oud is je kind?",
+  multiSelect: true,
+  options: [
+    {
+      label: "0–2 jaar",
+      value: "age_0_2",
+      weights: { overprikkeling: 1, meebewegen: 1 },
+    },
+    {
+      label: "3–5 jaar",
+      value: "age_3_5",
+      weights: { strijd: 1, overprikkeling: 1 },
+    },
+    {
+      label: "6–9 jaar",
+      value: "age_6_9",
+      weights: { strijd: 1, twijfel: 1 },
+    },
+    {
+      label: "10+ jaar",
+      value: "age_10_plus",
+      weights: { twijfel: 1, meebewegen: 1 },
+    },
+  ],
+};
+
+export const focusQuestion: QuestionDefinition = {
+  id: "focus",
+  title: "Waar wil je het liefst als eerste mee aan de slag?",
+  subtext: "Kies wat nu het meest speelt. De rest komt later.",
+  options: [
+    {
+      label: "Heftige emoties en escalaties",
+      value: "focus_emoties",
+      weights: { overprikkeling: 3, strijd: 1 },
+    },
+    {
+      label: "Niet luisteren en samenwerking",
+      value: "focus_luisteren",
+      weights: { strijd: 3, meebewegen: 1 },
+    },
+    {
+      label: "Veel strijd en grenzen",
+      value: "focus_strijd",
+      weights: { strijd: 3, meebewegen: 1 },
+    },
+    {
+      label: "Snel overprikkeld / alles wordt te veel",
+      value: "focus_overprikkeld",
+      weights: { overprikkeling: 3, twijfel: 1 },
+    },
+    {
+      label: "Onzekerheid over hoe ik moet reageren",
+      value: "focus_onzeker",
+      weights: { twijfel: 3, meebewegen: 1 },
+    },
+    {
+      label: "Weinig rust in huis",
+      value: "focus_rust",
+      weights: { overprikkeling: 2, strijd: 2 },
+    },
+    {
+      label: "Minder verbinding met mijn kind",
+      value: "focus_verbinding",
+      weights: { meebewegen: 3, twijfel: 1 },
+    },
+  ],
+};
+
+export const parentHelpQuestion: QuestionDefinition = {
+  id: "parentHelp",
+  title: "Wat zou jou als ouder nu het meest helpen?",
+  subtext: "Kies wat voor jou het meest herkenbaar voelt.",
+  options: [
+    {
+      label: "Mijn kind beter begrijpen",
+      value: "parent_help_begrijpen",
+      weights: { twijfel: 2, overprikkeling: 1 },
+    },
+    {
+      label: "Meer verbinding voelen met mijn kind",
+      value: "parent_help_verbinding",
+      weights: { meebewegen: 3 },
+    },
+    {
+      label: "Minder overweldigd zijn",
+      value: "parent_help_overweldigd",
+      weights: { overprikkeling: 3 },
+    },
+    {
+      label: "Minder chaos in het dagelijks leven",
+      value: "parent_help_chaos",
+      weights: { overprikkeling: 2, strijd: 2 },
+    },
+    {
+      label: "Rustig reageren in lastige momenten",
+      value: "parent_help_rustig_reageren",
+      weights: { twijfel: 1, overprikkeling: 2 },
+    },
+    {
+      label: "Meer vertrouwen voelen in mijn opvoeding",
+      value: "parent_help_vertrouwen",
+      weights: { twijfel: 3 },
+    },
+  ],
+};
+
+export const learningPreferenceQuestion: QuestionDefinition = {
+  id: "learningPreference",
+  title: "Hoe zou je dit het liefst willen leren?",
+  subtext: "Kies wat het beste bij jou past.",
+  options: [
+    {
+      label: "Direct antwoord op mijn vragen",
+      value: "learning_direct_antwoord",
+      weights: { twijfel: 2, strijd: 1 },
+    },
+    {
+      label: "Korte scripts en strategieën die ik meteen kan toepassen",
+      value: "learning_scripts",
+      weights: { strijd: 2, meebewegen: 1 },
+    },
+    {
+      label: "Workshops waarin ik meer verdieping krijg",
+      value: "learning_workshops",
+      weights: { twijfel: 1, overprikkeling: 1 },
+    },
+    {
+      label: "Live opvoedsessies met professionals",
+      value: "learning_live_sessies",
+      weights: { twijfel: 2, meebewegen: 1 },
+    },
+    {
+      label: "Geleide meditaties passend bij mijn vraag",
+      value: "learning_audios",
+      weights: { overprikkeling: 2 },
+    },
+    {
+      label: "Ik kan niet kiezen, dit klinkt allemaal fijn",
+      value: "learning_alles_fijn",
+      weights: { overprikkeling: 1, strijd: 1, twijfel: 1, meebewegen: 1 },
+    },
+  ],
+};
+
+export function getAgeOption(value?: AgeGroupValue) {
+  return ageQuestion.options.find((option) => option.value === value);
+}
