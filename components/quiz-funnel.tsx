@@ -487,12 +487,12 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
     .map((id) => contentLibrary[id])
     .filter((item) => item && (item.type === "workshop" || item.type === "cursus"));
   const opvoedAppFeatures = [
-    { image: "/images/workshops/result-feature-complete-courses.png" },
     { image: "/images/workshops/result-feature-a.png" },
-    { image: "/images/workshops/result-feature-f.png" },
+    { image: "/images/workshops/result-feature-e.png" },
     { image: "/images/workshops/result-feature-c.png" },
     { image: "/images/workshops/result-feature-d.png" },
-    { image: "/images/workshops/result-feature-e.png" },
+    { image: "/images/workshops/result-feature-b.png" },
+    { image: "/images/workshops/result-feature-f.png" },
   ];
   const backgroundPositions = ["left center", "30% center", "50% center", "70% center", "right center"] as const;
   const [currentIndex, setCurrentIndex] = useState(0);
