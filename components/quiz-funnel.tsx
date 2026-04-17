@@ -486,37 +486,13 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
     .slice(0, 3)
     .map((id) => contentLibrary[id])
     .filter((item) => item && (item.type === "workshop" || item.type === "cursus"));
-  const opvoedAppFeatureItems = [
-    {
-      title: "Complete opvoedcursussen",
-      description: "Stap voor stap naar meer rust en vertrouwen.",
-      image: "/images/workshops/result-feature-complete-courses.png",
-    },
-    {
-      title: "25+ workshops",
-      description: "Korte, praktische sessies over elk onderwerp.",
-      image: "/images/workshops/result-feature-a.png",
-    },
-    {
-      title: "ADHD Bibliotheek",
-      description: "Informatie en tools die écht helpen.",
-      image: "/images/workshops/result-feature-f.png",
-    },
-    {
-      title: "Contact met andere ouders",
-      description: "Deel ervaringen en groei samen verder.",
-      image: "/images/workshops/result-feature-c.png",
-    },
-    {
-      title: "Exclusieve live events",
-      description: "Met experts en coaches, alleen voor leden.",
-      image: "/images/workshops/result-feature-d.png",
-    },
-    {
-      title: "Vragen stellen aan de experts",
-      description: "Stel je vragen en krijg snel antwoord.",
-      image: "/images/workshops/result-feature-e.png",
-    },
+  const opvoedAppFeatures = [
+    { image: "/images/workshops/result-feature-complete-courses.png" },
+    { image: "/images/workshops/result-feature-a.png" },
+    { image: "/images/workshops/result-feature-f.png" },
+    { image: "/images/workshops/result-feature-c.png" },
+    { image: "/images/workshops/result-feature-d.png" },
+    { image: "/images/workshops/result-feature-e.png" },
   ];
   const backgroundPositions = ["left center", "30% center", "50% center", "70% center", "right center"] as const;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -683,14 +659,14 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
           </h3>
         </div>
         <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {opvoedAppFeatureItems.map((item) => (
+          {opvoedAppFeatures.map((item) => (
             <div
               key={item.image}
               className="overflow-hidden rounded-[24px] bg-white/82 shadow-[0_14px_30px_rgba(75,63,141,0.06)]"
             >
               <div className="relative aspect-[0.86/1]">
                 <Image
-                  alt={`${item.title} — ${item.description}`}
+                  alt="Feature van de OpvoedApp"
                   className="h-full w-full object-cover"
                   fill
                   sizes="(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 180px"
