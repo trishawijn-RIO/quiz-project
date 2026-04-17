@@ -4,7 +4,12 @@ export type ResultType =
   | "twijfel"
   | "meebewegen";
 
-export type AgeGroupValue = "age_0_2" | "age_3_5" | "age_6_9" | "age_10_plus";
+export type AgeGroupValue =
+  | "age_0_2"
+  | "age_2_4"
+  | "age_5_7"
+  | "age_8_12"
+  | "age_13_18";
 
 export type SingleAnswerValue =
   | AgeGroupValue
@@ -26,7 +31,8 @@ export type SingleAnswerValue =
   | "learning_workshops"
   | "learning_live_sessies"
   | "learning_audios"
-  | "learning_alles_fijn";
+  | "learning_alles_fijn"
+  | "learning_alles_nodig";
 
 export type QuestionOption = {
   label: string;

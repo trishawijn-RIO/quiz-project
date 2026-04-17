@@ -20,17 +20,22 @@ export const ageQuestion: QuestionDefinition = {
     },
     {
       label: "2–4 jaar",
-      value: "age_3_5",
+      value: "age_2_4",
       weights: { strijd: 1, overprikkeling: 1 },
     },
     {
       label: "5–7 jaar",
-      value: "age_6_9",
+      value: "age_5_7",
+      weights: { strijd: 1, twijfel: 1 },
+    },
+    {
+      label: "8–12 jaar",
+      value: "age_8_12",
       weights: { strijd: 1, twijfel: 1 },
     },
     {
       label: "13–18 jaar",
-      value: "age_10_plus",
+      value: "age_13_18",
       weights: { twijfel: 1, meebewegen: 1 },
     },
   ],
@@ -89,7 +94,7 @@ export const focusQuestionsByAge = {
     "Ik twijfel vaak of ik het goed doe",
   ],
 
-  age_3_5: [
+  age_2_4: [
     "De driftbuien lopen compleet uit de hand",
     "Mijn kind luistert niet",
     "Alles wordt een strijd (aankleden, eten, naar bed)",
@@ -98,7 +103,7 @@ export const focusQuestionsByAge = {
     "Ik merk dat ik zelf sneller boos word dan ik wil",
   ],
 
-  age_6_9: [
+  age_5_7: [
     "Mijn kind luistert niet en discussieert veel",
     "Mijn kind wordt snel boos of gefrustreerd",
     "Mijn kind heeft weinig zelfvertrouwen",
@@ -107,7 +112,16 @@ export const focusQuestionsByAge = {
     "Er is veel gedoe met broertjes/zusjes",
   ],
 
-  age_10_plus: [
+  age_8_12: [
+    "Mijn kind luistert niet en discussieert veel",
+    "Mijn kind wordt snel boos of gefrustreerd",
+    "Mijn kind heeft weinig zelfvertrouwen",
+    "Mijn kind praat weinig over wat er speelt",
+    "School zorgt voor spanning of problemen",
+    "Er is veel gedoe met broertjes/zusjes",
+  ],
+
+  age_13_18: [
     "Mijn kind trekt zich terug en deelt weinig",
     "We hebben steeds vaker discussie of conflict",
     "Mijn kind accepteert grenzen slecht",

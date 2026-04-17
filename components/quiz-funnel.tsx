@@ -425,9 +425,10 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
 
   const resultTitles = {
     age_0_2: "Meer rust en voorspelbaarheid voor jou en je baby",
-    age_3_5: "Minder strijd en meer samenwerking met je peuter",
-    age_6_9: "Meer rust in huis en minder gedoe in het dagelijks leven",
-    age_10_plus: "Meer verbinding en invloed in de puberteit",
+    age_2_4: "Minder strijd en meer samenwerking met je peuter",
+    age_5_7: "Meer rust in huis en minder gedoe in het dagelijks leven",
+    age_8_12: "Meer vertrouwen en grip op gedrag en school",
+    age_13_18: "Meer verbinding en invloed in de puberteit",
   };
 
   const title =

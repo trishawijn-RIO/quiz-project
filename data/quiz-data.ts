@@ -39,7 +39,7 @@ export const behaviorsByAge: Record<AgeGroupValue, BehaviorOption[]> = {
       value: "focus_onzeker",
     },
   ],
-  age_3_5: [
+  age_2_4: [
     {
       label: "De driftbuien lopen compleet uit de hand",
       value: "focus_emoties",
@@ -65,7 +65,7 @@ export const behaviorsByAge: Record<AgeGroupValue, BehaviorOption[]> = {
       value: "focus_onzeker",
     },
   ],
-  age_6_9: [
+  age_5_7: [
     {
       label: "Mijn kind luistert niet en discussieert veel",
       value: "focus_luisteren",
@@ -91,7 +91,33 @@ export const behaviorsByAge: Record<AgeGroupValue, BehaviorOption[]> = {
       value: "focus_strijd",
     },
   ],
-  age_10_plus: [
+  age_8_12: [
+    {
+      label: "Mijn kind luistert niet en discussieert veel",
+      value: "focus_luisteren",
+    },
+    {
+      label: "Mijn kind wordt snel boos of gefrustreerd",
+      value: "focus_emoties",
+    },
+    {
+      label: "Mijn kind heeft weinig zelfvertrouwen",
+      value: "focus_onzeker",
+    },
+    {
+      label: "Mijn kind praat weinig over wat er speelt",
+      value: "focus_verbinding",
+    },
+    {
+      label: "School zorgt voor spanning of problemen",
+      value: "focus_overprikkeld",
+    },
+    {
+      label: "Er is veel gedoe met broertjes/zusjes",
+      value: "focus_strijd",
+    },
+  ],
+  age_13_18: [
     {
       label: "Mijn kind trekt zich terug en deelt weinig",
       value: "focus_verbinding",
@@ -167,14 +193,14 @@ export const recommendationsByAgeAndBehavior: Partial<
     focus_rust: ["slapen", "verbinding", "emoties", "grenzen"],
     focus_verbinding: ["verbinding", "emoties", "slapen", "grenzen"],
   },
-  age_3_5: {
+  age_2_4: {
     focus_emoties: ["emoties", "grenzen", "verbinding", "slapen"],
     focus_luisteren: ["grenzen", "verbinding", "emoties", "zelfvertrouwen"],
     focus_strijd: ["grenzen", "verbinding", "emoties", "zelfvertrouwen"],
     focus_rust: ["slapen", "verbinding", "emoties", "grenzen"],
     focus_onzeker: ["zelfvertrouwen", "verbinding", "emoties", "grenzen"],
   },
-  age_6_9: {
+  age_5_7: {
     focus_luisteren: ["grenzen", "verbinding", "zelfvertrouwen", "school"],
     focus_emoties: ["emoties", "verbinding", "grenzen", "zelfvertrouwen"],
     focus_onzeker: ["zelfvertrouwen", "verbinding", "school", "emoties"],
@@ -182,7 +208,15 @@ export const recommendationsByAgeAndBehavior: Partial<
     focus_overprikkeld: ["school", "slapen", "emoties", "verbinding"],
     focus_strijd: ["grenzen", "verbinding", "emoties", "school"],
   },
-  age_10_plus: {
+  age_8_12: {
+    focus_luisteren: ["grenzen", "verbinding", "zelfvertrouwen", "school"],
+    focus_emoties: ["emoties", "verbinding", "grenzen", "zelfvertrouwen"],
+    focus_onzeker: ["zelfvertrouwen", "verbinding", "school", "emoties"],
+    focus_verbinding: ["verbinding", "zelfvertrouwen", "grenzen", "school"],
+    focus_overprikkeld: ["school", "slapen", "emoties", "verbinding"],
+    focus_strijd: ["grenzen", "verbinding", "emoties", "school"],
+  },
+  age_13_18: {
     focus_verbinding: ["verbinding", "zelfvertrouwen", "school", "grenzen"],
     focus_strijd: ["grenzen", "verbinding", "zelfvertrouwen", "school"],
     focus_luisteren: ["grenzen", "verbinding", "school", "zelfvertrouwen"],
