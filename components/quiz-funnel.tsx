@@ -181,14 +181,15 @@ export function QuizFunnel() {
                     Opvoeden is persoonlijk
                   </h1>
                   <p className="mx-auto mt-5 max-w-md text-lg leading-8 text-[var(--text-soft)]">
-                    Vertel ons wat er bij jullie speelt, en ontdek hoe onze app precies aansluit op jullie gezin.
+                    Vertel ons wat er speelt bij jou thuis, en we laten je zien wat jouw kind en jij nodig hebben.
+                    Op basis daarvan laten we zien hoe de OpvoedApp jou kan ondersteunen, precies afgestemd op jullie situatie.
                   </p>
                 </div>
                 <div className="my-12 sm:my-14">
                   <HeroIllustration />
                 </div>
                 <div className="mx-auto max-w-sm">
-                  <Button onClick={goToNextStep}>Doe de quiz</Button>
+                  <Button onClick={goToNextStep}>Start quiz (± 2 min)</Button>
                 </div>
               </Card>
             </motion.div>
@@ -199,7 +200,7 @@ export function QuizFunnel() {
               key="age"
               questionIndex={1}
               title={ageQuestion.title}
-              subtext="Kies alles wat op jullie gezin van toepassing is."
+              subtext="Dit bepaalt welke adviezen je straks krijgt."
               options={ageQuestion.options.map((option) => ({
                 ...option,
                 selected:
@@ -421,6 +422,17 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
     answers.primaryAge ||
     (Array.isArray(answers.age) ? answers.age[0] : answers.age);
 
+  const resultTitles = {
+    age_0_2: "Meer rust en voorspelbaarheid voor jou en je baby",
+    age_3_5: "Minder strijd en meer samenwerking met je peuter",
+    age_6_9: "Meer rust in huis en minder gedoe in het dagelijks leven",
+    age_10_plus: "Meer verbinding en invloed in de puberteit",
+  };
+
+  const title =
+    resultTitles[activeAge as keyof typeof resultTitles] ||
+    "Dit helpt jullie nu het meest";
+
   const selectedBehaviors = Array.isArray(answers.behavior)
     ? answers.behavior
     : answers.behavior
@@ -491,7 +503,7 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
           Voor jullie als gezin
         </span>
         <h2 className="mt-4 text-balance text-3xl font-semibold leading-tight text-[var(--text)] sm:text-4xl">
-          Zo ondersteunen we jou en je kind
+          {title}
         </h2>
         <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--text-soft)] sm:text-lg sm:leading-8">
           De juiste begeleiding voor precies waar jullie nu in vastlopen
@@ -614,30 +626,49 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
             Alles wat je krijgt in de OpvoedApp
           </h3>
         </div>
-        <ul className="mt-5 space-y-3">
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {[
-            "Live sessies met professionals",
-            "100+ lessen en cursussen",
-            "ADHD & neurodiversiteit bibliotheek",
-            "Meditaties voor ouder & kind",
-            "Praktische scripts voor lastige momenten",
+            {
+              src: "/images/result-features/feature-1.png",
+              alt: "Complete opvoedcursussen",
+            },
+            {
+              src: "/images/result-features/feature-2.png",
+              alt: "24/7 support",
+            },
+            {
+              src: "/images/result-features/feature-3.png",
+              alt: "ADHD bibliotheek",
+            },
+            {
+              src: "/images/result-features/feature-4.png",
+              alt: "Contact met andere ouders",
+            },
+            {
+              src: "/images/result-features/feature-5.png",
+              alt: "Exclusieve live events",
+            },
+            {
+              src: "/images/result-features/feature-6.png",
+              alt: "Vragen stellen aan de experts",
+            },
           ].map((item) => (
-            <li key={item} className="flex items-start gap-3 text-[var(--text)]">
-              <span className="mt-0.5 flex h-7 w-7 flex-none items-center justify-center rounded-full bg-[rgba(242,140,0,0.14)] text-[var(--primary-dark)]">
-                <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24">
-                  <path
-                    d="M6.5 12.5l3.5 3.5 7.5-8"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2.2"
-                  />
-                </svg>
-              </span>
-              <span className="text-base leading-7">{item}</span>
-            </li>
+            <div
+              key={item.src}
+              className="overflow-hidden rounded-[24px] bg-white/82 shadow-[0_14px_30px_rgba(75,63,141,0.06)]"
+            >
+              <div className="relative aspect-[0.86/1]">
+                <Image
+                  alt={item.alt}
+                  className="h-full w-full object-cover"
+                  fill
+                  sizes="(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 180px"
+                  src={item.src}
+                />
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       </section>
 
       <section className="rounded-[32px] bg-white/68 px-5 py-6 shadow-[0_18px_42px_rgba(75,63,141,0.08)] backdrop-blur-md sm:px-8 sm:py-8">

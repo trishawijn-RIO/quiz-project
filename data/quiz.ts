@@ -19,17 +19,17 @@ export const ageQuestion: QuestionDefinition = {
       weights: { overprikkeling: 1, meebewegen: 1 },
     },
     {
-      label: "3–5 jaar",
+      label: "2–4 jaar",
       value: "age_3_5",
       weights: { strijd: 1, overprikkeling: 1 },
     },
     {
-      label: "6–9 jaar",
+      label: "5–7 jaar",
       value: "age_6_9",
       weights: { strijd: 1, twijfel: 1 },
     },
     {
-      label: "10+ jaar",
+      label: "13–18 jaar",
       value: "age_10_plus",
       weights: { twijfel: 1, meebewegen: 1 },
     },
