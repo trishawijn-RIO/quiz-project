@@ -7,10 +7,14 @@ import { useMemo, useRef, useState } from "react";
 import {
   ageQuestion,
   focusQuestion,
-  focusQuestionsByAge,
   learningPreferenceQuestion,
   parentHelpQuestion,
 } from "@/data/quiz";
+import {
+  behaviorsByAge,
+  recommendationsByAgeAndBehavior,
+  contentLibrary,
+} from "@/data/quiz-data";
 import { calculateResult } from "@/lib/quiz-results";
 import type { AgeGroupValue, QuizAnswers, SingleAnswerValue } from "@/lib/quiz-types";
 import { HeroIllustration } from "@/components/hero-illustration";
@@ -84,7 +88,7 @@ export function QuizFunnel() {
     if (step === "intro" || step === "reassurance" || step === "result") return true;
     if (step === "age") return Array.isArray(answers.age) && answers.age.length > 0;
     if (step === "age-focus") return Boolean(answers.primaryAge);
-    if (step === "focus") return Boolean(answers.focus);
+    if (step === "focus") return Array.isArray(answers.behavior) && answers.behavior.length > 0;
     if (step === "parent-help") return Boolean(answers.parentHelp);
     if (step === "learning-preference") return Boolean(answers.learningPreference);
     return false;
@@ -127,6 +131,22 @@ export function QuizFunnel() {
     value: SingleAnswerValue | string,
   ) => {
     setAnswers((current) => ({ ...current, [questionId]: value }));
+  };
+
+  const handleMultiSelect = (questionId: "behavior", value: SingleAnswerValue) => {
+    setAnswers((current) => {
+      const currentValues = Array.isArray(current[questionId]) ? current[questionId] : [];
+      const exists = currentValues.includes(value);
+      const nextValues = exists
+        ? currentValues.filter((item) => item !== value)
+        : [...currentValues, value];
+
+      return {
+        ...current,
+        [questionId]: nextValues,
+        focus: nextValues[0],
+      };
+    });
   };
 
   return (
@@ -233,10 +253,12 @@ export function QuizFunnel() {
               questionIndex={needsPrimaryAgeStep ? 3 : 2}
               title={focusQuestion.title}
               subtext={focusQuestion.subtext}
-              options={((activeAge && focusQuestionsByAge[activeAge]) || []).map((label) => ({
-                label,
-                selected: answers.focus === label,
-                onClick: () => handleSingleSelect("focus", label),
+              options={((activeAge && behaviorsByAge[activeAge]) || []).map((option) => ({
+                label: option.label,
+                selected:
+                  Array.isArray(answers.behavior) && answers.behavior.includes(option.value),
+                onClick: () => handleMultiSelect("behavior", option.value),
+                multiSelect: true,
               }))}
               canContinue={canContinue}
               onBack={goToPreviousStep}
@@ -291,7 +313,7 @@ export function QuizFunnel() {
 
           {step === "result" ? (
             <motion.div key="result" {...screenMotion}>
-              <ResultScreen checkoutUrl={CHECKOUT_URL} result={result} />
+              <ResultScreen checkoutUrl={CHECKOUT_URL} result={result} answers={answers} />
             </motion.div>
           ) : null}
         </AnimatePresence>
@@ -391,46 +413,57 @@ function IntermediateScreen({
 type ResultScreenProps = {
   checkoutUrl: string;
   result: ReturnType<typeof calculateResult>;
+  answers: QuizAnswers;
 };
 
-function ResultScreen({ checkoutUrl, result }: ResultScreenProps) {
-  const carouselCards = [
-    {
-      title: "Community om te connecten met andere ouders",
-      text: "Een warme plek om vragen te stellen, mee te lezen en steun te voelen.",
-      image: "/standalone/assets/community.jpg",
-      badge: "Preview",
-    },
-    {
-      title: "Werkboeken, scripts en handleidingen",
-      text: "Duidelijke handvatten die je meteen kunt bewaren, printen of erbij pakken.",
-      image: "/standalone/assets/werkboeken.jpg",
-      badge: "Preview",
-    },
-    {
-      title: "Workshop ‘Grenzen stellen zonder strijd’",
-      text: "Liefdevolle duidelijkheid die helpt om spanning en strijd te verzachten.",
-      image: "/standalone/assets/grenzen-zonder-strijd.jpg",
-      badge: "Workshop",
-    },
-    {
-      title: "Gratis toegang tot Opvoedapp (tijdelijk)",
-      text: "Ontdek in alle rust wat er voor jullie klaarstaat, op jullie eigen moment.",
-      image: "/standalone/assets/gratis-toegang.jpg",
-      badge: "Tijdelijk",
-    },
-    {
-      title: "Live coaching calls met professionals",
-      text: "Stel je vragen rechtstreeks aan mensen die begrijpen waar jullie tegenaan lopen.",
-      image: "/standalone/assets/live-coaching.jpg",
-      badge: "Live",
-    },
-  ] as const;
+function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
+  const activeAge =
+    answers.primaryAge ||
+    (Array.isArray(answers.age) ? answers.age[0] : answers.age);
+
+  const selectedBehaviors = Array.isArray(answers.behavior)
+    ? answers.behavior
+    : answers.behavior
+      ? [answers.behavior]
+      : [];
+
+  const collectedIds = selectedBehaviors.flatMap(
+    (behavior) =>
+      (activeAge && behavior
+        ? recommendationsByAgeAndBehavior[activeAge]?.[behavior]
+        : []) || [],
+  );
+
+  const uniqueIds = collectedIds.filter(
+    (id, index, arr) => arr.indexOf(id) === index,
+  );
+
+  const ageFallbackIds = activeAge
+    ? Object.values(recommendationsByAgeAndBehavior[activeAge] || {}).flat()
+    : [];
+
+  const fallbackUniqueIds = ageFallbackIds.filter(
+    (id, index, arr) => arr.indexOf(id) === index,
+  );
+
+  const finalIds = [...uniqueIds];
+
+  for (const id of fallbackUniqueIds) {
+    if (!finalIds.includes(id)) {
+      finalIds.push(id);
+    }
+    if (finalIds.length === 3) break;
+  }
+
+  const recommendedContent = finalIds
+    .slice(0, 3)
+    .map((id) => contentLibrary[id])
+    .filter(Boolean);
   const backgroundPositions = ["left center", "30% center", "50% center", "70% center", "right center"] as const;
   const [currentIndex, setCurrentIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
   const visibleCards = 2;
-  const maxIndex = carouselCards.length - visibleCards;
+  const maxIndex = Math.max(recommendedContent.length - visibleCards, 0);
 
   const handleCheckoutClick = () => {
     trackEvent("cta_click", {
@@ -517,7 +550,7 @@ function ResultScreen({ checkoutUrl, result }: ResultScreenProps) {
             className="flex gap-4 transition-transform duration-500 ease-out"
             style={{ transform: `translateX(calc(-${currentIndex} * (50% + 0.5rem)))` }}
           >
-            {carouselCards.map((card) => (
+            {recommendedContent.map((card) => (
               <article
                 key={card.title}
                 className="min-w-[calc((100%-1rem)/2)] rounded-[24px] bg-white/88 p-2.5 shadow-[0_18px_36px_rgba(75,63,141,0.08)] sm:rounded-[28px] sm:p-3"
@@ -536,12 +569,12 @@ function ResultScreen({ checkoutUrl, result }: ResultScreenProps) {
                         <path d="M6 4.75A1.75 1.75 0 0 1 8.64 3.24l6.84 4.25a1.75 1.75 0 0 1 0 2.98l-6.84 4.25A1.75 1.75 0 0 1 6 13.24V4.75Z" />
                       </svg>
                     </span>
-                    {card.badge}
+                    {card.type}
                   </div>
                 </div>
                 <h3 className="mt-3 text-base font-semibold leading-6 text-[var(--text)] sm:mt-4 sm:text-xl sm:leading-8">{card.title}</h3>
                 <p className="mt-1.5 text-xs leading-5 text-[var(--text-soft)] sm:mt-2 sm:text-base sm:leading-7">
-                  {card.text}
+                  {card.description}
                 </p>
               </article>
             ))}
@@ -549,7 +582,7 @@ function ResultScreen({ checkoutUrl, result }: ResultScreenProps) {
         </div>
 
         <div className="mt-5 flex items-center justify-center gap-2">
-          {carouselCards.map((card, index) => (
+          {recommendedContent.map((card, index) => (
             <button
               key={card.title}
               aria-label={`Ga naar onderdeel ${index + 1}`}
@@ -578,20 +611,16 @@ function ResultScreen({ checkoutUrl, result }: ResultScreenProps) {
             </svg>
           </div>
           <h3 className="text-2xl font-semibold leading-tight text-[var(--text)]">
-            Steun die past bij jullie gezin
+            Alles wat je krijgt in de OpvoedApp
           </h3>
         </div>
-        <p className="mt-4 text-base leading-7 text-[var(--text-soft)]">
-          Je krijgt directe toegang tot praktische begeleiding, inspirerende workshops, duidelijke scripts,
-          werkboeken en steun van professionals. Alles overzichtelijk op één plek, zodat je meteen kunt
-          toepassen wat jullie nu nodig hebben.
-        </p>
         <ul className="mt-5 space-y-3">
           {[
-            "Praktische stappen voor lastige situaties",
-            "Workshops en begeleiding voor thuis",
-            "Direct toepasbare scripts en werkboeken",
-            "Steun die aansluit op jouw kind én jullie gezin",
+            "Live sessies met professionals",
+            "100+ lessen en cursussen",
+            "ADHD & neurodiversiteit bibliotheek",
+            "Meditaties voor ouder & kind",
+            "Praktische scripts voor lastige momenten",
           ].map((item) => (
             <li key={item} className="flex items-start gap-3 text-[var(--text)]">
               <span className="mt-0.5 flex h-7 w-7 flex-none items-center justify-center rounded-full bg-[rgba(242,140,0,0.14)] text-[var(--primary-dark)]">
