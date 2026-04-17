@@ -635,8 +635,8 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
               alt: "Complete opvoedcursussen",
             },
             {
-              src: "/images/result-features/feature-2.png",
-              alt: "24/7 support",
+              src: "/images/workshops/25-plus-workshops.png",
+              alt: "25+ workshops",
             },
             {
               src: "/images/result-features/feature-3.png",
@@ -651,8 +651,8 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
               alt: "Exclusieve live events",
             },
             {
-              src: "/images/result-features/feature-6.png",
-              alt: "Vragen stellen aan de experts",
+              src: "/images/workshops/professionals-overview.png",
+              alt: "Professionals",
             },
           ].map((item) => (
             <div
