@@ -488,7 +488,7 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
     .filter((item) => item && (item.type === "workshop" || item.type === "cursus"));
   const opvoedAppFeatures = [
     { image: "/images/workshops/result-feature-a.png" },
-    { image: "/images/workshops/result-feature-e.png" },
+    { image: "/images/workshops/complete-opvoedcursussen-v2.png" },
     { image: "/images/workshops/result-feature-c.png" },
     { image: "/images/workshops/result-feature-d.png" },
     { image: "/images/workshops/result-feature-b.png" },
