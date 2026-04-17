@@ -437,11 +437,11 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
     (Array.isArray(answers.age) ? answers.age[0] : answers.age);
 
   const resultTitles = {
-    age_0_2: "Meer rust en voorspelbaarheid voor jou en je baby",
-    age_2_4: "Minder strijd en meer samenwerking met je peuter",
-    age_5_7: "Meer rust in huis en minder gedoe in het dagelijks leven",
-    age_8_12: "Meer vertrouwen en grip op gedrag en school",
-    age_13_18: "Meer verbinding en invloed in de puberteit",
+    age_0_2: "Meer rust en vertrouwen in het ouderschap",
+    age_2_4: "Meer rust in huis en minder strijd met je kind",
+    age_5_7: "Meer rust, minder gedoe en weer plezier in opvoeden",
+    age_8_12: "Meer grip op gedrag en meer vertrouwen in je kind",
+    age_13_18: "Meer verbinding en minder strijd in de puberteit",
   };
 
   const title =
@@ -486,6 +486,38 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
     .slice(0, 3)
     .map((id) => contentLibrary[id])
     .filter((item) => item && (item.type === "workshop" || item.type === "cursus"));
+  const opvoedAppFeatureItems = [
+    {
+      title: "Complete opvoedcursussen",
+      description: "Stap voor stap naar meer rust en vertrouwen.",
+      image: "/images/workshops/result-feature-complete-courses.png",
+    },
+    {
+      title: "25+ workshops",
+      description: "Korte, praktische sessies over elk onderwerp.",
+      image: "/images/workshops/result-feature-a.png",
+    },
+    {
+      title: "ADHD Bibliotheek",
+      description: "Informatie en tools die écht helpen.",
+      image: "/images/workshops/result-feature-f.png",
+    },
+    {
+      title: "Contact met andere ouders",
+      description: "Deel ervaringen en groei samen verder.",
+      image: "/images/workshops/result-feature-c.png",
+    },
+    {
+      title: "Exclusieve live events",
+      description: "Met experts en coaches, alleen voor leden.",
+      image: "/images/workshops/result-feature-d.png",
+    },
+    {
+      title: "Vragen stellen aan de experts",
+      description: "Stel je vragen en krijg snel antwoord.",
+      image: "/images/workshops/result-feature-e.png",
+    },
+  ];
   const backgroundPositions = ["left center", "30% center", "50% center", "70% center", "right center"] as const;
   const [currentIndex, setCurrentIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
@@ -651,43 +683,18 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
           </h3>
         </div>
         <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {[
-            {
-              src: "/images/workshops/result-feature-a.png",
-              alt: "Feature van de OpvoedApp",
-            },
-            {
-              src: "/images/workshops/result-feature-b.png",
-              alt: "Feature van de OpvoedApp",
-            },
-            {
-              src: "/images/workshops/result-feature-c.png",
-              alt: "Feature van de OpvoedApp",
-            },
-            {
-              src: "/images/workshops/result-feature-d.png",
-              alt: "Feature van de OpvoedApp",
-            },
-            {
-              src: "/images/workshops/result-feature-e.png",
-              alt: "Feature van de OpvoedApp",
-            },
-            {
-              src: "/images/workshops/result-feature-f.png",
-              alt: "Feature van de OpvoedApp",
-            },
-          ].map((item) => (
+          {opvoedAppFeatureItems.map((item) => (
             <div
-              key={item.src}
+              key={item.image}
               className="overflow-hidden rounded-[24px] bg-white/82 shadow-[0_14px_30px_rgba(75,63,141,0.06)]"
             >
               <div className="relative aspect-[0.86/1]">
                 <Image
-                  alt={item.alt}
+                  alt={`${item.title} — ${item.description}`}
                   className="h-full w-full object-cover"
                   fill
                   sizes="(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 180px"
-                  src={item.src}
+                  src={item.image}
                 />
               </div>
             </div>
