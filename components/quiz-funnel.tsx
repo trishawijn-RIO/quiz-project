@@ -662,12 +662,12 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
           {opvoedAppFeatures.map((item) => (
             <div
               key={item.image}
-              className="overflow-hidden rounded-[24px] bg-white/82 shadow-[0_14px_30px_rgba(75,63,141,0.06)]"
+              className="rounded-[24px] bg-white/82 shadow-[0_14px_30px_rgba(75,63,141,0.06)]"
             >
-              <div className="relative flex aspect-[0.86/1] items-center justify-center">
+              <div className="relative w-full aspect-square rounded-[20px] bg-white p-3 sm:p-4">
                 <Image
-                  alt="Feature van de OpvoedApp"
-                  className="object-contain p-3 sm:p-4"
+                  alt=""
+                  className="object-contain"
                   fill
                   sizes="(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 180px"
                   src={item.image}
