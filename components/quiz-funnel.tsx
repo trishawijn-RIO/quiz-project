@@ -151,12 +151,24 @@ export function QuizFunnel() {
 
   return (
     <main className="min-h-screen px-4 py-6 sm:px-6 sm:py-10">
-      <div className="mx-auto flex min-h-[calc(100vh-3rem)] max-w-xl flex-col justify-center">
+      <div className="relative isolate mx-auto flex min-h-[calc(100vh-3rem)] max-w-xl flex-col justify-center overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
+          <Image
+            alt="OpvoedApp watermark"
+            className="h-auto w-[72%] max-w-[440px] object-contain opacity-[0.045]"
+            height={720}
+            src="/images/logo-watermark.png"
+            width={720}
+          />
+        </div>
         {currentProgressStep > 0 ? (
-          <ProgressBar currentStep={currentProgressStep} totalSteps={totalSteps} />
+          <div className="relative z-10">
+            <ProgressBar currentStep={currentProgressStep} totalSteps={totalSteps} />
+          </div>
         ) : null}
 
-        <AnimatePresence mode="wait">
+        <div className="relative z-10">
+          <AnimatePresence mode="wait">
           {step === "intro" ? (
             <motion.div key="intro" {...screenMotion}>
               <Card className="border-none bg-[linear-gradient(180deg,rgba(255,251,248,0.88)_0%,rgba(255,255,255,0.64)_100%)] px-5 py-8 text-center shadow-[0_18px_44px_rgba(75,63,141,0.08)] sm:px-8 sm:py-11">
@@ -318,7 +330,8 @@ export function QuizFunnel() {
               <ResultScreen checkoutUrl={CHECKOUT_URL} result={result} answers={answers} />
             </motion.div>
           ) : null}
-        </AnimatePresence>
+          </AnimatePresence>
+        </div>
       </div>
     </main>
   );
@@ -490,7 +503,7 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
 
   return (
     <div
-      className="space-y-5 rounded-[36px] border border-white/45 bg-[linear-gradient(180deg,rgba(250,245,239,0.72)_0%,rgba(250,245,239,0.88)_100%)] p-3 shadow-[0_24px_56px_rgba(75,63,141,0.10)] backdrop-blur-sm sm:space-y-6 sm:p-4"
+      className="relative isolate space-y-5 overflow-hidden rounded-[36px] border border-white/45 bg-[linear-gradient(180deg,rgba(250,245,239,0.72)_0%,rgba(250,245,239,0.88)_100%)] p-3 shadow-[0_24px_56px_rgba(75,63,141,0.10)] backdrop-blur-sm sm:space-y-6 sm:p-4"
       style={{
         backgroundImage:
           "linear-gradient(180deg, rgba(250,245,239,0.76), rgba(250,245,239,0.9)), url('/standalone/assets/family-path-banner.png')",
@@ -500,7 +513,16 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
         transition: "background-position 0.7s ease",
       }}
     >
-      <section className="rounded-[32px] bg-white/62 px-5 py-6 shadow-[0_18px_42px_rgba(75,63,141,0.08)] backdrop-blur-md sm:px-8 sm:py-8">
+      <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
+        <Image
+          alt="OpvoedApp watermark"
+          className="h-auto w-[68%] max-w-[520px] object-contain opacity-[0.04]"
+          height={840}
+          src="/images/logo-watermark.png"
+          width={840}
+        />
+      </div>
+      <section className="relative z-10 rounded-[32px] bg-white/62 px-5 py-6 shadow-[0_18px_42px_rgba(75,63,141,0.08)] backdrop-blur-md sm:px-8 sm:py-8">
         <span className="inline-flex rounded-full bg-[rgba(169,159,214,0.18)] px-4 py-2 text-sm font-medium text-[var(--primary-dark)]">
           Voor jullie als gezin
         </span>
@@ -612,7 +634,7 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
         </div>
       </section>
 
-      <section className="rounded-[32px] bg-white/68 px-5 py-6 shadow-[0_18px_42px_rgba(75,63,141,0.08)] backdrop-blur-md sm:px-8 sm:py-8">
+      <section className="relative z-10 rounded-[32px] bg-white/68 px-5 py-6 shadow-[0_18px_42px_rgba(75,63,141,0.08)] backdrop-blur-md sm:px-8 sm:py-8">
         <div className="flex items-center gap-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-[18px] bg-[rgba(169,159,214,0.20)] text-[var(--primary-dark)]">
             <svg aria-hidden="true" className="h-5 w-5" fill="none" viewBox="0 0 24 24">
@@ -631,28 +653,28 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
         <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {[
             {
-              src: "/images/result-features/feature-1.png",
-              alt: "Complete opvoedcursussen",
+              src: "/images/workshops/opvoedapp-feature-1.png",
+              alt: "Feature van de OpvoedApp",
             },
             {
-              src: "/images/workshops/25-plus-workshops.png",
-              alt: "25+ workshops",
+              src: "/images/workshops/opvoedapp-feature-2.png",
+              alt: "Feature van de OpvoedApp",
             },
             {
-              src: "/images/result-features/feature-3.png",
-              alt: "ADHD bibliotheek",
+              src: "/images/workshops/opvoedapp-feature-3.png",
+              alt: "Feature van de OpvoedApp",
             },
             {
-              src: "/images/result-features/feature-4.png",
-              alt: "Contact met andere ouders",
+              src: "/images/workshops/opvoedapp-feature-4.png",
+              alt: "Feature van de OpvoedApp",
             },
             {
-              src: "/images/result-features/feature-5.png",
-              alt: "Exclusieve live events",
+              src: "/images/workshops/opvoedapp-feature-5.png",
+              alt: "Feature van de OpvoedApp",
             },
             {
-              src: "/images/workshops/professionals-overview.png",
-              alt: "Professionals",
+              src: "/images/workshops/opvoedapp-feature-6.png",
+              alt: "Feature van de OpvoedApp",
             },
           ].map((item) => (
             <div
@@ -686,36 +708,20 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
           Zo krijg je niet alleen herkenning, maar ook echte richting.
         </p>
 
-        <div className="mt-6 flex flex-wrap items-center gap-2.5 sm:gap-3">
-          {[
-            { name: "Rosalie, drs.", image: "/images/rosalie.webp" },
-            { name: "Corine", image: "/images/corine.webp" },
-            { name: "Celia", image: "/images/celia.webp" },
-            { name: "Trisha", image: "/images/sifra.png" },
-            { name: "Sifra", image: "/images/trisha.png" },
-          ].map((professional) => (
-            <div
-              key={professional.name}
-              className="inline-flex items-center gap-2.5 rounded-full bg-white/78 px-2.5 py-1.5 shadow-[0_10px_22px_rgba(75,63,141,0.06)] sm:px-3 sm:py-2"
-            >
-              <div className="h-9 w-9 overflow-hidden rounded-full bg-white/90 sm:h-10 sm:w-10">
-                <Image
-                  alt={professional.name}
-                  className="h-full w-full object-cover"
-                  height={88}
-                  src={professional.image}
-                  width={88}
-                />
-              </div>
-              <span className="text-xs font-semibold text-[var(--text)] sm:text-sm">
-                {professional.name}
-              </span>
-            </div>
-          ))}
+        <div className="mt-6 overflow-hidden rounded-[24px] bg-white/78 shadow-[0_10px_22px_rgba(75,63,141,0.06)]">
+          <div className="relative aspect-[2.65/1]">
+            <Image
+              alt="Begeleid door professionals"
+              className="h-full w-full object-cover"
+              fill
+              sizes="(max-width: 640px) 100vw, 720px"
+              src="/images/workshops/professionals-overview.png"
+            />
+          </div>
         </div>
       </section>
 
-      <section className="rounded-[32px] bg-white/74 px-5 py-7 text-center shadow-[0_18px_42px_rgba(75,63,141,0.08)] backdrop-blur-md sm:px-8 sm:py-9">
+      <section className="relative z-10 rounded-[32px] bg-white/74 px-5 py-7 text-center shadow-[0_18px_42px_rgba(75,63,141,0.08)] backdrop-blur-md sm:px-8 sm:py-9">
         <h3 className="text-3xl font-semibold leading-tight text-[var(--text)]">Begin vandaag</h3>
         <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-[var(--text-soft)]">
           Probeer het nu en ontdek hoe het voelt om er niet meer alleen voor te staan.
