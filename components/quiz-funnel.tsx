@@ -653,27 +653,27 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
         <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {[
             {
-              src: "/images/workshops/opvoedapp-feature-1.png",
+              src: "/images/workshops/result-feature-a.png",
               alt: "Feature van de OpvoedApp",
             },
             {
-              src: "/images/workshops/opvoedapp-feature-2.png",
+              src: "/images/workshops/result-feature-b.png",
               alt: "Feature van de OpvoedApp",
             },
             {
-              src: "/images/workshops/opvoedapp-feature-3.png",
+              src: "/images/workshops/result-feature-c.png",
               alt: "Feature van de OpvoedApp",
             },
             {
-              src: "/images/workshops/opvoedapp-feature-4.png",
+              src: "/images/workshops/result-feature-d.png",
               alt: "Feature van de OpvoedApp",
             },
             {
-              src: "/images/workshops/opvoedapp-feature-5.png",
+              src: "/images/workshops/result-feature-e.png",
               alt: "Feature van de OpvoedApp",
             },
             {
-              src: "/images/workshops/opvoedapp-feature-6.png",
+              src: "/images/workshops/result-feature-f.png",
               alt: "Feature van de OpvoedApp",
             },
           ].map((item) => (
@@ -715,7 +715,7 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
               className="h-full w-full object-cover"
               fill
               sizes="(max-width: 640px) 100vw, 720px"
-              src="/images/workshops/professionals-overview.png"
+              src="/images/workshops/result-professionals.png"
             />
           </div>
         </div>
