@@ -60,8 +60,8 @@ type FunnelStep =
   | "result";
 
 const reassuranceContent = {
-  title: "Je zit hier goed",
-  text: "We weten dat je dit kunt, en we weten ook dat het niet makkelijk is. We helpen je om hier met meer helderheid en vertrouwen doorheen te gaan.",
+  title: "Je bent op de juiste plek",
+  text: "We weten dat je het kunt en we weten ook dat dit niet altijd makkelijk is.\nMet de OpvoedApp helpen we je stap voor stap vooruit, zodat je precies op het juiste moment weet wat te doen.",
 };
 
 export function QuizFunnel() {
@@ -199,7 +199,7 @@ export function QuizFunnel() {
             <QuestionScreen
               key="age"
               questionIndex={1}
-              title={ageQuestion.title}
+              title="Hoe oud is je kind?"
               subtext="Dit bepaalt welke adviezen je straks krijgt."
               options={ageQuestion.options.map((option) => ({
                 ...option,
@@ -232,7 +232,8 @@ export function QuizFunnel() {
             <QuestionScreen
               key="age-focus"
               questionIndex={2}
-              title="Welk kind zit nu het meest in je hoofd?"
+              title="Welk kind vraagt nu het meest je aandacht?"
+              subtext="Kies er één om mee te beginnen. Weet dat onze aanpak verder gaat dan één situatie of één kind."
               options={ageQuestion.options.map((option) => ({
                 ...option,
                 selected: answers.primaryAge === option.value,

@@ -146,36 +146,36 @@ export const focusWeightsByLabel = {
 
 export const parentHelpQuestion: QuestionDefinition = {
   id: "parentHelp",
-  title: "Wat zou jou als ouder nu het meest helpen?",
-  subtext: "Kies wat voor jou het meest herkenbaar voelt.",
+  title: "Wat helpt jou het meest om dit anders aan te pakken?",
+  subtext: "Kies wat het beste bij je past, dan sluiten we de OpvoedApp daarop aan.",
   options: [
     {
-      label: "Mijn kind beter begrijpen",
+      label: "Direct weten wat je kan zeggen of doen in lastige momenten",
       value: "parent_help_begrijpen",
       weights: { twijfel: 2, overprikkeling: 1 },
     },
     {
-      label: "Meer verbinding voelen met mijn kind",
+      label: "Snel toepasbare tips die je meteen kan gebruiken",
       value: "parent_help_verbinding",
       weights: { meebewegen: 3 },
     },
     {
-      label: "Minder overweldigd zijn",
+      label: "Dieper begrijpen waarom je kind zo reageert",
       value: "parent_help_overweldigd",
       weights: { overprikkeling: 3 },
     },
     {
-      label: "Minder chaos in het dagelijks leven",
+      label: "Meer rust en overzicht in je hoofd",
       value: "parent_help_chaos",
       weights: { overprikkeling: 2, strijd: 2 },
     },
     {
-      label: "Rustig reageren in lastige momenten",
+      label: "Stap voor stap begeleid worden in wat werkt",
       value: "parent_help_rustig_reageren",
       weights: { twijfel: 1, overprikkeling: 2 },
     },
     {
-      label: "Meer vertrouwen voelen in mijn opvoeding",
+      label: "Dit klinkt allemaal fijn",
       value: "parent_help_vertrouwen",
       weights: { twijfel: 3 },
     },
@@ -184,37 +184,42 @@ export const parentHelpQuestion: QuestionDefinition = {
 
 export const learningPreferenceQuestion: QuestionDefinition = {
   id: "learningPreference",
-  title: "Hoe zou je dit het liefst willen leren?",
-  subtext: "Kies wat het beste bij jou past.",
+  title: "Hoe wil je dit het liefst volgen?",
+  subtext: "Selecteer alles wat bij je past, je vindt dit allemaal terug in de OpvoedApp.",
   options: [
     {
-      label: "Direct antwoord op mijn vragen",
+      label: "Korte, snelle lessen die je tussendoor kan doen",
       value: "learning_direct_antwoord",
       weights: { twijfel: 2, strijd: 1 },
     },
     {
-      label: "Korte scripts en strategieën die ik meteen kan toepassen",
+      label: "Concrete scripts die je direct kan gebruiken",
       value: "learning_scripts",
       weights: { strijd: 2, meebewegen: 1 },
     },
     {
-      label: "Workshops waarin ik meer verdieping krijg",
+      label: "Verdiepende cursussen waarin je echt de diepte in gaat",
       value: "learning_workshops",
       weights: { twijfel: 1, overprikkeling: 1 },
     },
     {
-      label: "Live opvoedsessies met professionals",
+      label: "Gebruik maken van de ADHD bibliotheek",
       value: "learning_live_sessies",
       weights: { twijfel: 2, meebewegen: 1 },
     },
     {
-      label: "Geleide meditaties passend bij mijn vraag",
+      label: "Live sessies waarin je vragen kan stellen",
       value: "learning_audios",
       weights: { overprikkeling: 2 },
     },
     {
-      label: "Ik kan niet kiezen, dit klinkt allemaal fijn",
+      label: "100+ Geleide meditaties",
       value: "learning_alles_fijn",
+      weights: { overprikkeling: 1, strijd: 1, twijfel: 1, meebewegen: 1 },
+    },
+    {
+      label: "Je hebt dit allemaal nodig om het anders te kunnen doen",
+      value: "learning_alles_nodig",
       weights: { overprikkeling: 1, strijd: 1, twijfel: 1, meebewegen: 1 },
     },
   ],
