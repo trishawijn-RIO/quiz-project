@@ -664,10 +664,10 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
               key={item.image}
               className="overflow-hidden rounded-[24px] bg-white/82 shadow-[0_14px_30px_rgba(75,63,141,0.06)]"
             >
-              <div className="relative aspect-[0.86/1]">
+              <div className="relative flex aspect-[0.86/1] items-center justify-center">
                 <Image
                   alt="Feature van de OpvoedApp"
-                  className="h-full w-full object-cover"
+                  className="object-contain p-3 sm:p-4"
                   fill
                   sizes="(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 180px"
                   src={item.image}
