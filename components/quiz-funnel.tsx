@@ -492,7 +492,7 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
     { image: "/images/workshops/result-feature-c.png" },
     { image: "/images/workshops/result-feature-d.png" },
     { image: "/images/workshops/result-feature-b.png" },
-    { image: "/images/workshops/result-feature-f.png" },
+    { image: "/images/workshops/adhd-bibliotheek.png" },
   ];
   const backgroundPositions = ["left center", "30% center", "50% center", "70% center", "right center"] as const;
   const [currentIndex, setCurrentIndex] = useState(0);
