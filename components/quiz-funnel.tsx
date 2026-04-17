@@ -458,7 +458,7 @@ function ResultScreen({ checkoutUrl, result, answers }: ResultScreenProps) {
   const recommendedContent = finalIds
     .slice(0, 3)
     .map((id) => contentLibrary[id])
-    .filter(Boolean);
+    .filter((item) => item && (item.type === "workshop" || item.type === "cursus"));
   const backgroundPositions = ["left center", "30% center", "50% center", "70% center", "right center"] as const;
   const [currentIndex, setCurrentIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);

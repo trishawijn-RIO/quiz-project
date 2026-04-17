@@ -120,35 +120,41 @@ export const behaviorsByAge: Record<AgeGroupValue, BehaviorOption[]> = {
 };
 
 export const contentLibrary: Record<string, ContentItem> = {
-  community: {
-    title: "Community om te connecten met andere ouders",
-    description: "Een warme plek om vragen te stellen, mee te lezen en steun te voelen.",
-    type: "Preview",
-    image: "/images/workshops/2.png",
-  },
-  werkboeken: {
-    title: "Werkboeken, scripts en handleidingen",
-    description: "Duidelijke handvatten die je meteen kunt bewaren, printen of erbij pakken.",
-    type: "Preview",
-    image: "/images/workshops/12.png",
-  },
   grenzen: {
     title: "Workshop ‘Grenzen stellen zonder strijd’",
     description: "Liefdevolle duidelijkheid die helpt om spanning en strijd te verzachten.",
-    type: "Workshop",
+    type: "workshop",
     image: "/images/workshops/11.png",
   },
-  app: {
-    title: "Gratis toegang tot Opvoedapp (tijdelijk)",
-    description: "Ontdek in alle rust wat er voor jullie klaarstaat, op jullie eigen moment.",
-    type: "Tijdelijk",
-    image: "/images/workshops/24.png",
+  emoties: {
+    title: "Cursus ‘Omgaan met grote emoties’",
+    description: "Leer hoe je je kind helpt bij boosheid, frustratie en escalaties zonder zelf mee te schieten.",
+    type: "cursus",
+    image: "/images/workshops/4.png",
   },
-  coaching: {
-    title: "Live coaching calls met professionals",
-    description: "Stel je vragen rechtstreeks aan mensen die begrijpen waar jullie tegenaan lopen.",
-    type: "Live",
-    image: "/images/workshops/18.png",
+  slapen: {
+    title: "Cursus ‘Meer rust rondom slapen’",
+    description: "Praktische stappen voor meer voorspelbaarheid, rust en vertrouwen rondom slapen en bedtijd.",
+    type: "cursus",
+    image: "/images/workshops/22.png",
+  },
+  verbinding: {
+    title: "Workshop ‘Verbinding maken in lastige momenten’",
+    description: "Ontdek hoe je dichtbij je kind blijft en tegelijk richting geeft als het spannend wordt.",
+    type: "workshop",
+    image: "/images/workshops/23.png",
+  },
+  zelfvertrouwen: {
+    title: "Cursus ‘Zelfvertrouwen versterken’",
+    description: "Help je kind steviger in zichzelf te staan met rustige, direct toepasbare handvatten.",
+    type: "cursus",
+    image: "/images/workshops/9.png",
+  },
+  school: {
+    title: "Workshop ‘Rust bij schoolstress en overprikkeling’",
+    description: "Meer grip op spanning rond school, overgangen en volle dagen.",
+    type: "workshop",
+    image: "/images/workshops/8.png",
   },
 };
 
@@ -156,31 +162,31 @@ export const recommendationsByAgeAndBehavior: Partial<
   Record<AgeGroupValue, Partial<Record<SingleAnswerValue, string[]>>>
 > = {
   age_0_2: {
-    focus_overprikkeld: ["werkboeken", "app", "coaching", "community"],
-    focus_onzeker: ["coaching", "community", "werkboeken", "app"],
-    focus_rust: ["werkboeken", "app", "community", "coaching"],
-    focus_verbinding: ["community", "coaching", "app", "werkboeken"],
+    focus_overprikkeld: ["slapen", "emoties", "verbinding", "grenzen"],
+    focus_onzeker: ["verbinding", "emoties", "grenzen", "slapen"],
+    focus_rust: ["slapen", "verbinding", "emoties", "grenzen"],
+    focus_verbinding: ["verbinding", "emoties", "slapen", "grenzen"],
   },
   age_3_5: {
-    focus_emoties: ["grenzen", "coaching", "werkboeken", "community"],
-    focus_luisteren: ["grenzen", "werkboeken", "app", "coaching"],
-    focus_strijd: ["grenzen", "werkboeken", "community", "coaching"],
-    focus_rust: ["app", "werkboeken", "community", "coaching"],
-    focus_onzeker: ["coaching", "werkboeken", "community", "app"],
+    focus_emoties: ["emoties", "grenzen", "verbinding", "slapen"],
+    focus_luisteren: ["grenzen", "verbinding", "emoties", "zelfvertrouwen"],
+    focus_strijd: ["grenzen", "verbinding", "emoties", "zelfvertrouwen"],
+    focus_rust: ["slapen", "verbinding", "emoties", "grenzen"],
+    focus_onzeker: ["zelfvertrouwen", "verbinding", "emoties", "grenzen"],
   },
   age_6_9: {
-    focus_luisteren: ["grenzen", "werkboeken", "coaching", "community"],
-    focus_emoties: ["coaching", "werkboeken", "community", "app"],
-    focus_onzeker: ["coaching", "community", "werkboeken", "app"],
-    focus_verbinding: ["community", "coaching", "app", "werkboeken"],
-    focus_overprikkeld: ["app", "werkboeken", "coaching", "community"],
-    focus_strijd: ["grenzen", "werkboeken", "community", "coaching"],
+    focus_luisteren: ["grenzen", "verbinding", "zelfvertrouwen", "school"],
+    focus_emoties: ["emoties", "verbinding", "grenzen", "zelfvertrouwen"],
+    focus_onzeker: ["zelfvertrouwen", "verbinding", "school", "emoties"],
+    focus_verbinding: ["verbinding", "zelfvertrouwen", "grenzen", "school"],
+    focus_overprikkeld: ["school", "slapen", "emoties", "verbinding"],
+    focus_strijd: ["grenzen", "verbinding", "emoties", "school"],
   },
   age_10_plus: {
-    focus_verbinding: ["community", "coaching", "app", "werkboeken"],
-    focus_strijd: ["grenzen", "coaching", "werkboeken", "community"],
-    focus_luisteren: ["grenzen", "werkboeken", "coaching", "community"],
-    focus_onzeker: ["coaching", "community", "app", "werkboeken"],
-    focus_rust: ["app", "community", "werkboeken", "coaching"],
+    focus_verbinding: ["verbinding", "zelfvertrouwen", "school", "grenzen"],
+    focus_strijd: ["grenzen", "verbinding", "zelfvertrouwen", "school"],
+    focus_luisteren: ["grenzen", "verbinding", "school", "zelfvertrouwen"],
+    focus_onzeker: ["zelfvertrouwen", "verbinding", "school", "emoties"],
+    focus_rust: ["school", "verbinding", "slapen", "zelfvertrouwen"],
   },
 };
