@@ -243,17 +243,22 @@ export const learningPreferenceQuestion: QuestionDefinition = {
 
 export const neurodiversityQuestion: QuestionDefinition = {
   id: "neurodiversity",
-  title: "Is er iets belangrijks dat we moeten weten over je kind?",
+  title: "Is er iets belangrijks dat we moeten weten over jouw kind?",
   subtext:
-    "Bijvoorbeeld iets wat invloed heeft op hoe je kind denkt, voelt of reageert. Selecteer alles wat van toepassing is.",
+    "Bijvoorbeeld iets wat invloed heeft op hoe jouw kind denkt, voelt of reageert. Selecteer alles wat van toepassing is.",
   multiSelect: true,
   options: [
-    { label: "ADHD of ADD", value: "neurodiversity_adhd", weights: {} },
-    { label: "Autisme", value: "neurodiversity_autisme", weights: {} },
-    { label: "Hoogsensitiviteit", value: "neurodiversity_hoogsensitiviteit", weights: {} },
-    { label: "Sterke emoties of snel overprikkeld", value: "neurodiversity_emoties", weights: {} },
-    { label: "Slaapproblemen", value: "neurodiversity_slapen", weights: {} },
-    { label: "Iets anders dat belangrijk is", value: "neurodiversity_anders", weights: {} },
+    { label: "Nee", value: "neurodiversity_nee", weights: {} },
+    { label: "Ja, ADD of ADHD", value: "neurodiversity_adhd", weights: {} },
+    { label: "Ja, ASS", value: "neurodiversity_ass", weights: {} },
+    { label: "Ja, hoogsensitief", value: "neurodiversity_hoogsensitiviteit", weights: {} },
+    {
+      label: "Ja, mijn kind ontwikkelt zich anders (bijvoorbeeld sneller of juist wat langzamer)",
+      value: "neurodiversity_ontwikkelt_anders",
+      weights: {},
+    },
+    { label: "Ja, iets anders", value: "neurodiversity_anders", weights: {} },
+    { label: "Je weet het niet zeker", value: "neurodiversity_onzeker", weights: {} },
   ],
 };
 
@@ -262,26 +267,44 @@ export const hardestQuestion: QuestionDefinition = {
   title: "Wat vind je hier het moeilijkst aan?",
   multiSelect: true,
   options: [
-    { label: "Ik weet niet goed wat ik moet doen", value: "hardest_niet_weten", weights: {} },
-    { label: "Ik blijf zelf niet rustig", value: "hardest_zelf_rustig", weights: {} },
-    { label: "Het kost me veel energie", value: "hardest_energie", weights: {} },
-    { label: "Ik voel me er schuldig over", value: "hardest_schuldig", weights: {} },
-    { label: "Het blijft zich herhalen", value: "hardest_herhalen", weights: {} },
-    { label: "Ik voel me er alleen in", value: "hardest_alleen", weights: {} },
+    { label: "Je weet niet goed wat je moet doen", value: "hardest_niet_weten", weights: {} },
+    { label: "Het kost je veel energie", value: "hardest_energie", weights: {} },
+    { label: "Je raakt gefrustreerd", value: "hardest_gefrustreerd", weights: {} },
+    { label: "Het zorgt voor spanning thuis", value: "hardest_spanning_thuis", weights: {} },
+    { label: "Je twijfelt of je het goed aanpakt", value: "hardest_twijfel", weights: {} },
+    { label: "Je voelt je soms machteloos", value: "hardest_machteloos", weights: {} },
+    {
+      label: "Je voelt je schuldig (omdat je hebt geschreeuwd, gedreigd of onaardige dingen hebt gezegd)",
+      value: "hardest_schuldig",
+      weights: {},
+    },
+    {
+      label: "Je bent bang dat het alleen maar erger wordt",
+      value: "hardest_erger",
+      weights: {},
+    },
+    {
+      label: "Je hebt er veel ruzie over met je partner",
+      value: "hardest_partner",
+      weights: {},
+    },
   ],
 };
 
 export const impactQuestion: QuestionDefinition = {
   id: "impact",
   title: "Waar merk je dat dit invloed op heeft in je leven?",
+  subtext: "Selecteer alles wat voor jou herkenbaar is.",
   multiSelect: true,
   options: [
-    { label: "Mijn energie", value: "impact_energie", weights: {} },
     { label: "De sfeer in huis", value: "impact_sfeer", weights: {} },
-    { label: "Mijn relatie", value: "impact_relatie", weights: {} },
-    { label: "Mijn werk of concentratie", value: "impact_werk", weights: {} },
-    { label: "Broertjes of zusjes", value: "impact_gezin", weights: {} },
-    { label: "Mijn zelfvertrouwen als ouder", value: "impact_zelfvertrouwen", weights: {} },
+    { label: "Je relatie met je partner", value: "impact_relatie", weights: {} },
+    { label: "Het contact met familie", value: "impact_familie", weights: {} },
+    { label: "Het contact met vrienden", value: "impact_vrienden", weights: {} },
+    { label: "Je eigen energie en geduld", value: "impact_energie", weights: {} },
+    { label: "Je zelfvertrouwen als ouder", value: "impact_zelfvertrouwen", weights: {} },
+    { label: "Momenten buitenshuis (zoals bezoek of uitjes)", value: "impact_buitenshuis", weights: {} },
+    { label: "Eigenlijk op veel momenten in mijn leven", value: "impact_overal", weights: {} },
   ],
 };
 
@@ -290,12 +313,13 @@ export const triedQuestion: QuestionDefinition = {
   title: "Wat heb je tot nu toe al geprobeerd?",
   multiSelect: true,
   options: [
-    { label: 'Rustig uitleggen', value: "tried_uitleggen", weights: {} },
-    { label: "Consequent grenzen stellen", value: "tried_grenzen", weights: {} },
-    { label: "Belonen of motiveren", value: "tried_belonen", weights: {} },
-    { label: "Straffen of dreigen", value: "tried_straffen", weights: {} },
-    { label: "Informatie opzoeken of lezen", value: "tried_lezen", weights: {} },
-    { label: "Hulp vragen", value: "tried_hulp", weights: {} },
+    { label: "Je hebt geprobeerd rustig uit te leggen", value: "tried_uitleggen", weights: {} },
+    { label: "Je bent strenger geweest / grenzen gaan stellen", value: "tried_grenzen", weights: {} },
+    { label: "Je hebt het geprobeerd te negeren", value: "tried_negeren", weights: {} },
+    { label: "Je hebt belonen ingezet", value: "tried_belonen", weights: {} },
+    { label: "Je hebt geprobeerd consequent te blijven", value: "tried_consequent", weights: {} },
+    { label: "Je hebt hulp gezocht bij instanties", value: "tried_hulp", weights: {} },
+    { label: "Je weet niet goed wat werkt.", value: "tried_onzeker", weights: {} },
   ],
 };
 
@@ -305,11 +329,27 @@ export const desiredChangeQuestion: QuestionDefinition = {
   multiSelect: true,
   options: [
     { label: "Meer rust in huis", value: "desired_rust", weights: {} },
+    { label: "Dat je kind beter luistert", value: "desired_luisteren", weights: {} },
+    { label: "Minder boosheid of driftbuien", value: "desired_minder_boosheid", weights: {} },
+    { label: "Meer zelfvertrouwen bij je kind", value: "desired_zelfvertrouwen_kind", weights: {} },
     { label: "Minder strijd", value: "desired_minder_strijd", weights: {} },
-    { label: "Meer verbinding", value: "desired_verbinding", weights: {} },
-    { label: "Meer vertrouwen in mezelf", value: "desired_vertrouwen", weights: {} },
-    { label: "Sneller weten wat werkt", value: "desired_weten", weights: {} },
-    { label: "Meer plezier in opvoeden", value: "desired_plezier", weights: {} },
+    { label: "Meer plezier samen", value: "desired_plezier", weights: {} },
+    { label: "Je hebt meer vertrouwen in jouw rol als ouder", value: "desired_vertrouwen", weights: {} },
+    { label: "Er wordt weer respectvol gecommuniceerd in huis.", value: "desired_respectvol", weights: {} },
+  ],
+};
+
+export const problemIntensityQuestion: QuestionDefinition = {
+  id: "problemIntensity",
+  title: "Hoe vaak speelt dit en hoe lang zit je hier al mee?",
+  subtext: "Kies wat het beste bij jullie situatie past.",
+  options: [
+    { label: "Af en toe, en nog maar kort (korter dan 2 weken)", value: "problem_intensity_kort", weights: {} },
+    { label: "Af en toe, maar speelt al langer", value: "problem_intensity_langer", weights: {} },
+    { label: "Een paar keer per week, sinds een paar weken", value: "problem_intensity_weken", weights: {} },
+    { label: "Een paar keer per week, al een paar maanden", value: "problem_intensity_maanden", weights: {} },
+    { label: "Bijna elke dag, al een tijdje", value: "problem_intensity_bijna_dagelijks", weights: {} },
+    { label: "Meerdere keren per dag, al langere tijd", value: "problem_intensity_meerdere_per_dag", weights: {} },
   ],
 };
 

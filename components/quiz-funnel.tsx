@@ -183,7 +183,7 @@ export function QuizFunnel() {
   };
 
   const handleSingleSelect = (
-    questionId: "primaryAge" | "focus" | "parentHelp" | "learningPreference",
+    questionId: "primaryAge" | "focus" | "problemIntensity",
     value: SingleAnswerValue | string,
   ) => {
     setAnswers((current) => ({ ...current, [questionId]: value }));
@@ -426,9 +426,14 @@ export function QuizFunnel() {
               key="energy"
               questionIndex={getQuestionIndex("energy")}
               title="Hoeveel energie kost dit je momenteel?"
-              value={answers.energyLevel ?? 5}
+              value={typeof answers.energyLevel === "number" ? answers.energyLevel : 5}
+              onChange={(value) =>
+                setAnswers((current) => ({
+                  ...current,
+                  energyLevel: value,
+                }))
+              }
               onBack={goToPreviousStep}
-              onChange={(value) => setAnswers((current) => ({ ...current, energyLevel: value }))}
               onNext={goToNextStep}
             />
           ) : null}
@@ -515,55 +520,6 @@ export function QuizFunnel() {
   );
 }
 
-function SliderScreen({
-  questionIndex,
-  title,
-  value,
-  onChange,
-  onBack,
-  onNext,
-}: {
-  questionIndex: number;
-  title: string;
-  value: number;
-  onChange: (value: number) => void;
-  onBack: () => void;
-  onNext: () => void;
-}) {
-  return (
-    <motion.div {...screenMotion}>
-      <Card className="border-none px-6 py-7 shadow-[0_18px_42px_rgba(75,63,141,0.08)] sm:px-8 sm:py-8">
-        <p className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-[var(--primary)]">
-          Vraag {questionIndex}
-        </p>
-        <h2 className="text-balance text-3xl font-semibold leading-tight sm:text-4xl">{title}</h2>
-        <div className="mt-8">
-          <input
-            className="w-full accent-[rgba(242,140,0,0.88)]"
-            max={10}
-            min={0}
-            onChange={(event) => onChange(Number(event.target.value))}
-            step={1}
-            type="range"
-            value={value}
-          />
-          <div className="mt-3 flex items-start justify-between gap-4 text-sm leading-6 text-[var(--text-soft)]">
-            <span>0 = het valt wel mee</span>
-            <span className="text-base font-semibold text-[var(--text)]">{value}</span>
-            <span className="text-right">10 = ik ben helemaal uitgeput</span>
-          </div>
-        </div>
-        <div className="mt-8 flex flex-col gap-3">
-          <Button onClick={onNext}>Ga verder</Button>
-          <Button onClick={onBack} variant="secondary">
-            Vorige
-          </Button>
-        </div>
-      </Card>
-    </motion.div>
-  );
-}
-
 type QuestionScreenProps = {
   questionIndex: number;
   title: string;
@@ -641,6 +597,55 @@ function IntermediateScreen({
         <div className="mx-auto mb-7 h-16 w-16 rounded-full bg-[var(--theme-soft)]" />
         <h2 className="text-balance text-3xl font-semibold leading-tight sm:text-4xl">{title}</h2>
         <p className="mt-5 text-lg leading-8 text-[var(--text-soft)]">{text}</p>
+        <div className="mt-8 flex flex-col gap-3">
+          <Button onClick={onNext}>Ga verder</Button>
+          <Button onClick={onBack} variant="secondary">
+            Vorige
+          </Button>
+        </div>
+      </Card>
+    </motion.div>
+  );
+}
+
+function SliderScreen({
+  questionIndex,
+  title,
+  value,
+  onChange,
+  onBack,
+  onNext,
+}: {
+  questionIndex: number;
+  title: string;
+  value: number;
+  onChange: (value: number) => void;
+  onBack: () => void;
+  onNext: () => void;
+}) {
+  return (
+    <motion.div {...screenMotion}>
+      <Card className="border-none px-6 py-7 shadow-[0_18px_42px_rgba(75,63,141,0.08)] sm:px-8 sm:py-8">
+        <p className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-[var(--primary)]">
+          Vraag {questionIndex}
+        </p>
+        <h2 className="text-balance text-3xl font-semibold leading-tight sm:text-4xl">{title}</h2>
+        <div className="mt-8">
+          <div className="mb-3 text-center text-2xl font-semibold text-[var(--text)]">{value}</div>
+          <input
+            className="w-full accent-[rgba(242,140,0,0.88)]"
+            max={10}
+            min={0}
+            onChange={(event) => onChange(Number(event.target.value))}
+            step={1}
+            type="range"
+            value={value}
+          />
+          <div className="mt-3 flex items-start justify-between gap-4 text-sm leading-6 text-[var(--text-soft)]">
+            <span>0 = het valt wel mee</span>
+            <span className="text-right">10 = ik ben helemaal uitgeput</span>
+          </div>
+        </div>
         <div className="mt-8 flex flex-col gap-3">
           <Button onClick={onNext}>Ga verder</Button>
           <Button onClick={onBack} variant="secondary">

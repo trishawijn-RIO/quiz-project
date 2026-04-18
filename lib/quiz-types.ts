@@ -31,6 +31,7 @@ export type QuizAnswers = {
   impact?: string[];
   tried?: string[];
   desiredChange?: string[];
+  problemIntensity?: string;
   energyLevel?: number;
   parentHelp?: SingleAnswerValue[];
   learningPreference?: SingleAnswerValue[];
