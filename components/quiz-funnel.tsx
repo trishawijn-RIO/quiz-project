@@ -7,8 +7,13 @@ import { useMemo, useRef, useState } from "react";
 import {
   ageQuestion,
   focusQuestion,
+  hardestQuestion,
+  impactQuestion,
   learningPreferenceQuestion,
+  neurodiversityQuestion,
   parentHelpQuestion,
+  triedQuestion,
+  desiredChangeQuestion,
 } from "@/data/quiz";
 import {
   behaviorsByAge,
@@ -54,7 +59,13 @@ type FunnelStep =
   | "age"
   | "age-focus"
   | "focus"
+  | "neurodiversity"
+  | "hardest"
+  | "impact"
+  | "tried"
+  | "energy"
   | "reassurance"
+  | "desired-change"
   | "parent-help"
   | "learning-preference"
   | "result";
@@ -66,31 +77,64 @@ const reassuranceContent = {
 
 export function QuizFunnel() {
   const [step, setStep] = useState<FunnelStep>("intro");
-  const [answers, setAnswers] = useState<QuizAnswers>({});
+  const [answers, setAnswers] = useState<QuizAnswers>({ energyLevel: 5 });
   const result = useMemo(() => calculateResult(answers), [answers]);
   const activeAge =
     answers.primaryAge ||
     (Array.isArray(answers.age) ? answers.age[0] : answers.age);
   const needsPrimaryAgeStep = (answers.age?.length ?? 0) > 1;
-  const totalSteps = needsPrimaryAgeStep ? 6 : 5;
+  const flowSteps: FunnelStep[] = needsPrimaryAgeStep
+    ? [
+        "age",
+        "age-focus",
+        "focus",
+        "neurodiversity",
+        "hardest",
+        "impact",
+        "tried",
+        "energy",
+        "reassurance",
+        "desired-change",
+        "parent-help",
+        "learning-preference",
+      ]
+    : [
+        "age",
+        "focus",
+        "neurodiversity",
+        "hardest",
+        "impact",
+        "tried",
+        "energy",
+        "reassurance",
+        "desired-change",
+        "parent-help",
+        "learning-preference",
+      ];
+  const questionSteps = flowSteps.filter((item) => item !== "reassurance");
+  const totalSteps = flowSteps.length;
   const currentProgressStep =
     step === "intro"
       ? 0
       : step === "result"
         ? totalSteps
-        : (
-            needsPrimaryAgeStep
-              ? ["age", "age-focus", "focus", "reassurance", "parent-help", "learning-preference"]
-              : ["age", "focus", "reassurance", "parent-help", "learning-preference"]
-          ).indexOf(step) + 1;
+        : flowSteps.indexOf(step) + 1;
+  const getQuestionIndex = (currentStep: FunnelStep) => questionSteps.indexOf(currentStep) + 1;
 
   const canContinue = (() => {
     if (step === "intro" || step === "reassurance" || step === "result") return true;
     if (step === "age") return Array.isArray(answers.age) && answers.age.length > 0;
     if (step === "age-focus") return Boolean(answers.primaryAge);
     if (step === "focus") return Array.isArray(answers.behavior) && answers.behavior.length > 0;
-    if (step === "parent-help") return Boolean(answers.parentHelp);
-    if (step === "learning-preference") return Boolean(answers.learningPreference);
+    if (step === "neurodiversity") return Array.isArray(answers.neurodiversity) && answers.neurodiversity.length > 0;
+    if (step === "hardest") return Array.isArray(answers.hardest) && answers.hardest.length > 0;
+    if (step === "impact") return Array.isArray(answers.impact) && answers.impact.length > 0;
+    if (step === "tried") return Array.isArray(answers.tried) && answers.tried.length > 0;
+    if (step === "energy") return typeof answers.energyLevel === "number";
+    if (step === "desired-change") return Array.isArray(answers.desiredChange) && answers.desiredChange.length > 0;
+    if (step === "parent-help") return Array.isArray(answers.parentHelp) && answers.parentHelp.length > 0;
+    if (step === "learning-preference")
+      return Array.isArray(answers.learningPreference) && answers.learningPreference.length > 0;
     return false;
   })();
 
@@ -103,8 +147,14 @@ export function QuizFunnel() {
         return "age-focus";
       }
       if (current === "age-focus") return "focus";
-      if (current === "focus") return "reassurance";
-      if (current === "reassurance") return "parent-help";
+      if (current === "focus") return "neurodiversity";
+      if (current === "neurodiversity") return "hardest";
+      if (current === "hardest") return "impact";
+      if (current === "impact") return "tried";
+      if (current === "tried") return "energy";
+      if (current === "energy") return "reassurance";
+      if (current === "reassurance") return "desired-change";
+      if (current === "desired-change") return "parent-help";
       if (current === "parent-help") return "learning-preference";
       if (current === "learning-preference") return "result";
       return current;
@@ -118,8 +168,14 @@ export function QuizFunnel() {
       if (current === "focus") {
         return Array.isArray(answers.age) && answers.age.length > 1 ? "age-focus" : "age";
       }
-      if (current === "reassurance") return "focus";
-      if (current === "parent-help") return "reassurance";
+      if (current === "neurodiversity") return "focus";
+      if (current === "hardest") return "neurodiversity";
+      if (current === "impact") return "hardest";
+      if (current === "tried") return "impact";
+      if (current === "energy") return "tried";
+      if (current === "reassurance") return "energy";
+      if (current === "desired-change") return "reassurance";
+      if (current === "parent-help") return "desired-change";
       if (current === "learning-preference") return "parent-help";
       if (current === "result") return "learning-preference";
       return current;
@@ -133,7 +189,18 @@ export function QuizFunnel() {
     setAnswers((current) => ({ ...current, [questionId]: value }));
   };
 
-  const handleMultiSelect = (questionId: "behavior", value: SingleAnswerValue) => {
+  const handleMultiSelect = (
+    questionId:
+      | "behavior"
+      | "neurodiversity"
+      | "hardest"
+      | "impact"
+      | "tried"
+      | "desiredChange"
+      | "parentHelp"
+      | "learningPreference",
+    value: SingleAnswerValue,
+  ) => {
     setAnswers((current) => {
       const currentValues = Array.isArray(current[questionId]) ? current[questionId] : [];
       const exists = currentValues.includes(value);
@@ -144,7 +211,7 @@ export function QuizFunnel() {
       return {
         ...current,
         [questionId]: nextValues,
-        focus: nextValues[0],
+        ...(questionId === "behavior" ? { focus: nextValues[0] } : {}),
       };
     });
   };
@@ -210,7 +277,7 @@ export function QuizFunnel() {
           {step === "age" ? (
             <QuestionScreen
               key="age"
-              questionIndex={1}
+              questionIndex={getQuestionIndex("age")}
               title="Hoe oud is je kind?"
               subtext="Dit bepaalt welke adviezen je straks krijgt."
               options={ageQuestion.options.map((option) => ({
@@ -243,7 +310,7 @@ export function QuizFunnel() {
           {step === "age-focus" ? (
             <QuestionScreen
               key="age-focus"
-              questionIndex={2}
+              questionIndex={getQuestionIndex("age-focus")}
               title="Welk kind vraagt nu het meest je aandacht?"
               subtext="Kies er één om mee te beginnen. Weet dat onze aanpak verder gaat dan één situatie of één kind."
               options={ageQuestion.options.map((option) => ({
@@ -264,7 +331,7 @@ export function QuizFunnel() {
           {step === "focus" ? (
             <QuestionScreen
               key="focus"
-              questionIndex={needsPrimaryAgeStep ? 3 : 2}
+              questionIndex={getQuestionIndex("focus")}
               title={focusQuestion.title}
               subtext={focusQuestion.subtext}
               options={((activeAge && behaviorsByAge[activeAge]) || []).map((option) => ({
@@ -280,6 +347,92 @@ export function QuizFunnel() {
             />
           ) : null}
 
+          {step === "neurodiversity" ? (
+            <QuestionScreen
+              key="neurodiversity"
+              questionIndex={getQuestionIndex("neurodiversity")}
+              title={neurodiversityQuestion.title}
+              subtext={neurodiversityQuestion.subtext}
+              options={neurodiversityQuestion.options.map((option) => ({
+                ...option,
+                selected:
+                  Array.isArray(answers.neurodiversity) &&
+                  answers.neurodiversity.includes(option.value),
+                onClick: () => handleMultiSelect("neurodiversity", option.value),
+                multiSelect: true,
+              }))}
+              canContinue={canContinue}
+              onBack={goToPreviousStep}
+              onNext={goToNextStep}
+            />
+          ) : null}
+
+          {step === "hardest" ? (
+            <QuestionScreen
+              key="hardest"
+              questionIndex={getQuestionIndex("hardest")}
+              title={hardestQuestion.title}
+              subtext={hardestQuestion.subtext}
+              options={hardestQuestion.options.map((option) => ({
+                ...option,
+                selected: Array.isArray(answers.hardest) && answers.hardest.includes(option.value),
+                onClick: () => handleMultiSelect("hardest", option.value),
+                multiSelect: true,
+              }))}
+              canContinue={canContinue}
+              onBack={goToPreviousStep}
+              onNext={goToNextStep}
+            />
+          ) : null}
+
+          {step === "impact" ? (
+            <QuestionScreen
+              key="impact"
+              questionIndex={getQuestionIndex("impact")}
+              title={impactQuestion.title}
+              subtext={impactQuestion.subtext}
+              options={impactQuestion.options.map((option) => ({
+                ...option,
+                selected: Array.isArray(answers.impact) && answers.impact.includes(option.value),
+                onClick: () => handleMultiSelect("impact", option.value),
+                multiSelect: true,
+              }))}
+              canContinue={canContinue}
+              onBack={goToPreviousStep}
+              onNext={goToNextStep}
+            />
+          ) : null}
+
+          {step === "tried" ? (
+            <QuestionScreen
+              key="tried"
+              questionIndex={getQuestionIndex("tried")}
+              title={triedQuestion.title}
+              subtext={triedQuestion.subtext}
+              options={triedQuestion.options.map((option) => ({
+                ...option,
+                selected: Array.isArray(answers.tried) && answers.tried.includes(option.value),
+                onClick: () => handleMultiSelect("tried", option.value),
+                multiSelect: true,
+              }))}
+              canContinue={canContinue}
+              onBack={goToPreviousStep}
+              onNext={goToNextStep}
+            />
+          ) : null}
+
+          {step === "energy" ? (
+            <SliderScreen
+              key="energy"
+              questionIndex={getQuestionIndex("energy")}
+              title="Hoeveel energie kost dit je momenteel?"
+              value={answers.energyLevel ?? 5}
+              onBack={goToPreviousStep}
+              onChange={(value) => setAnswers((current) => ({ ...current, energyLevel: value }))}
+              onNext={goToNextStep}
+            />
+          ) : null}
+
           {step === "reassurance" ? (
             <IntermediateScreen
               key="reassurance"
@@ -290,16 +443,38 @@ export function QuizFunnel() {
             />
           ) : null}
 
+          {step === "desired-change" ? (
+            <QuestionScreen
+              key="desired-change"
+              questionIndex={getQuestionIndex("desired-change")}
+              title={desiredChangeQuestion.title}
+              subtext={desiredChangeQuestion.subtext}
+              options={desiredChangeQuestion.options.map((option) => ({
+                ...option,
+                selected:
+                  Array.isArray(answers.desiredChange) &&
+                  answers.desiredChange.includes(option.value),
+                onClick: () => handleMultiSelect("desiredChange", option.value),
+                multiSelect: true,
+              }))}
+              canContinue={canContinue}
+              onBack={goToPreviousStep}
+              onNext={goToNextStep}
+            />
+          ) : null}
+
           {step === "parent-help" ? (
             <QuestionScreen
               key="parent-help"
-              questionIndex={needsPrimaryAgeStep ? 5 : 4}
+              questionIndex={getQuestionIndex("parent-help")}
               title={parentHelpQuestion.title}
               subtext={parentHelpQuestion.subtext}
               options={parentHelpQuestion.options.map((option) => ({
                 ...option,
-                selected: answers.parentHelp === option.value,
-                onClick: () => handleSingleSelect("parentHelp", option.value),
+                selected:
+                  Array.isArray(answers.parentHelp) && answers.parentHelp.includes(option.value),
+                onClick: () => handleMultiSelect("parentHelp", option.value),
+                multiSelect: true,
               }))}
               canContinue={canContinue}
               onBack={goToPreviousStep}
@@ -310,13 +485,16 @@ export function QuizFunnel() {
           {step === "learning-preference" ? (
             <QuestionScreen
               key="learning-preference"
-              questionIndex={needsPrimaryAgeStep ? 6 : 5}
+              questionIndex={getQuestionIndex("learning-preference")}
               title={learningPreferenceQuestion.title}
               subtext={learningPreferenceQuestion.subtext}
               options={learningPreferenceQuestion.options.map((option) => ({
                 ...option,
-                selected: answers.learningPreference === option.value,
-                onClick: () => handleSingleSelect("learningPreference", option.value),
+                selected:
+                  Array.isArray(answers.learningPreference) &&
+                  answers.learningPreference.includes(option.value),
+                onClick: () => handleMultiSelect("learningPreference", option.value),
+                multiSelect: true,
               }))}
               canContinue={canContinue}
               onBack={goToPreviousStep}
@@ -334,6 +512,55 @@ export function QuizFunnel() {
         </div>
       </div>
     </main>
+  );
+}
+
+function SliderScreen({
+  questionIndex,
+  title,
+  value,
+  onChange,
+  onBack,
+  onNext,
+}: {
+  questionIndex: number;
+  title: string;
+  value: number;
+  onChange: (value: number) => void;
+  onBack: () => void;
+  onNext: () => void;
+}) {
+  return (
+    <motion.div {...screenMotion}>
+      <Card className="border-none px-6 py-7 shadow-[0_18px_42px_rgba(75,63,141,0.08)] sm:px-8 sm:py-8">
+        <p className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-[var(--primary)]">
+          Vraag {questionIndex}
+        </p>
+        <h2 className="text-balance text-3xl font-semibold leading-tight sm:text-4xl">{title}</h2>
+        <div className="mt-8">
+          <input
+            className="w-full accent-[rgba(242,140,0,0.88)]"
+            max={10}
+            min={0}
+            onChange={(event) => onChange(Number(event.target.value))}
+            step={1}
+            type="range"
+            value={value}
+          />
+          <div className="mt-3 flex items-start justify-between gap-4 text-sm leading-6 text-[var(--text-soft)]">
+            <span>0 = het valt wel mee</span>
+            <span className="text-base font-semibold text-[var(--text)]">{value}</span>
+            <span className="text-right">10 = ik ben helemaal uitgeput</span>
+          </div>
+        </div>
+        <div className="mt-8 flex flex-col gap-3">
+          <Button onClick={onNext}>Ga verder</Button>
+          <Button onClick={onBack} variant="secondary">
+            Vorige
+          </Button>
+        </div>
+      </Card>
+    </motion.div>
   );
 }
 

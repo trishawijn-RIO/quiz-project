@@ -13,26 +13,7 @@ export type AgeGroupValue =
 
 export type SingleAnswerValue =
   | AgeGroupValue
-  | "focus_emoties"
-  | "focus_luisteren"
-  | "focus_strijd"
-  | "focus_overprikkeld"
-  | "focus_onzeker"
-  | "focus_rust"
-  | "focus_verbinding"
-  | "parent_help_begrijpen"
-  | "parent_help_verbinding"
-  | "parent_help_overweldigd"
-  | "parent_help_chaos"
-  | "parent_help_rustig_reageren"
-  | "parent_help_vertrouwen"
-  | "learning_direct_antwoord"
-  | "learning_scripts"
-  | "learning_workshops"
-  | "learning_live_sessies"
-  | "learning_audios"
-  | "learning_alles_fijn"
-  | "learning_alles_nodig";
+  | string;
 
 export type QuestionOption = {
   label: string;
@@ -45,8 +26,14 @@ export type QuizAnswers = {
   primaryAge?: AgeGroupValue;
   behavior?: SingleAnswerValue[];
   focus?: SingleAnswerValue | string;
-  parentHelp?: SingleAnswerValue;
-  learningPreference?: SingleAnswerValue;
+  neurodiversity?: string[];
+  hardest?: string[];
+  impact?: string[];
+  tried?: string[];
+  desiredChange?: string[];
+  energyLevel?: number;
+  parentHelp?: SingleAnswerValue[];
+  learningPreference?: SingleAnswerValue[];
 };
 
 export type QuizResultContent = {

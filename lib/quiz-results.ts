@@ -68,14 +68,15 @@ export function calculateResult(answers: QuizAnswers): QuizResultContent {
   const ageOption = getAgeOption(answers.primaryAge || answers.age?.[0]);
   const focusOption = focusQuestion.options.find((option) => option.value === answers.focus);
   const focusWeights = focusOption?.weights || (answers.focus ? focusWeightsByLabel[answers.focus as keyof typeof focusWeightsByLabel] : undefined);
-  const parentHelpOption = parentHelpQuestion.options.find(
-    (option) => option.value === answers.parentHelp,
+  const parentHelpOptions = parentHelpQuestion.options.filter((option) =>
+    Array.isArray(answers.parentHelp) && answers.parentHelp.includes(option.value),
   );
-  const learningPreferenceOption = learningPreferenceQuestion.options.find(
-    (option) => option.value === answers.learningPreference,
+  const learningPreferenceOptions = learningPreferenceQuestion.options.filter((option) =>
+    Array.isArray(answers.learningPreference) &&
+    answers.learningPreference.includes(option.value),
   );
 
-  for (const option of [ageOption, parentHelpOption, learningPreferenceOption]) {
+  for (const option of [ageOption, ...parentHelpOptions, ...learningPreferenceOptions]) {
     if (!option) continue;
 
     for (const [type, score] of Object.entries(option.weights) as [ResultType, number][]) {

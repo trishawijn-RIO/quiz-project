@@ -162,6 +162,7 @@ export const parentHelpQuestion: QuestionDefinition = {
   id: "parentHelp",
   title: "Wat helpt jou het meest om dit anders aan te pakken?",
   subtext: "Kies wat het beste bij je past, dan sluiten we de OpvoedApp daarop aan.",
+  multiSelect: true,
   options: [
     {
       label: "Direct weten wat je kan zeggen of doen in lastige momenten",
@@ -200,6 +201,7 @@ export const learningPreferenceQuestion: QuestionDefinition = {
   id: "learningPreference",
   title: "Hoe wil je dit het liefst volgen?",
   subtext: "Selecteer alles wat bij je past, je vindt dit allemaal terug in de OpvoedApp.",
+  multiSelect: true,
   options: [
     {
       label: "Korte, snelle lessen die je tussendoor kan doen",
@@ -236,6 +238,78 @@ export const learningPreferenceQuestion: QuestionDefinition = {
       value: "learning_alles_nodig",
       weights: { overprikkeling: 1, strijd: 1, twijfel: 1, meebewegen: 1 },
     },
+  ],
+};
+
+export const neurodiversityQuestion: QuestionDefinition = {
+  id: "neurodiversity",
+  title: "Is er iets belangrijks dat we moeten weten over je kind?",
+  subtext:
+    "Bijvoorbeeld iets wat invloed heeft op hoe je kind denkt, voelt of reageert. Selecteer alles wat van toepassing is.",
+  multiSelect: true,
+  options: [
+    { label: "ADHD of ADD", value: "neurodiversity_adhd", weights: {} },
+    { label: "Autisme", value: "neurodiversity_autisme", weights: {} },
+    { label: "Hoogsensitiviteit", value: "neurodiversity_hoogsensitiviteit", weights: {} },
+    { label: "Sterke emoties of snel overprikkeld", value: "neurodiversity_emoties", weights: {} },
+    { label: "Slaapproblemen", value: "neurodiversity_slapen", weights: {} },
+    { label: "Iets anders dat belangrijk is", value: "neurodiversity_anders", weights: {} },
+  ],
+};
+
+export const hardestQuestion: QuestionDefinition = {
+  id: "hardest",
+  title: "Wat vind je hier het moeilijkst aan?",
+  multiSelect: true,
+  options: [
+    { label: "Ik weet niet goed wat ik moet doen", value: "hardest_niet_weten", weights: {} },
+    { label: "Ik blijf zelf niet rustig", value: "hardest_zelf_rustig", weights: {} },
+    { label: "Het kost me veel energie", value: "hardest_energie", weights: {} },
+    { label: "Ik voel me er schuldig over", value: "hardest_schuldig", weights: {} },
+    { label: "Het blijft zich herhalen", value: "hardest_herhalen", weights: {} },
+    { label: "Ik voel me er alleen in", value: "hardest_alleen", weights: {} },
+  ],
+};
+
+export const impactQuestion: QuestionDefinition = {
+  id: "impact",
+  title: "Waar merk je dat dit invloed op heeft in je leven?",
+  multiSelect: true,
+  options: [
+    { label: "Mijn energie", value: "impact_energie", weights: {} },
+    { label: "De sfeer in huis", value: "impact_sfeer", weights: {} },
+    { label: "Mijn relatie", value: "impact_relatie", weights: {} },
+    { label: "Mijn werk of concentratie", value: "impact_werk", weights: {} },
+    { label: "Broertjes of zusjes", value: "impact_gezin", weights: {} },
+    { label: "Mijn zelfvertrouwen als ouder", value: "impact_zelfvertrouwen", weights: {} },
+  ],
+};
+
+export const triedQuestion: QuestionDefinition = {
+  id: "tried",
+  title: "Wat heb je tot nu toe al geprobeerd?",
+  multiSelect: true,
+  options: [
+    { label: 'Rustig uitleggen', value: "tried_uitleggen", weights: {} },
+    { label: "Consequent grenzen stellen", value: "tried_grenzen", weights: {} },
+    { label: "Belonen of motiveren", value: "tried_belonen", weights: {} },
+    { label: "Straffen of dreigen", value: "tried_straffen", weights: {} },
+    { label: "Informatie opzoeken of lezen", value: "tried_lezen", weights: {} },
+    { label: "Hulp vragen", value: "tried_hulp", weights: {} },
+  ],
+};
+
+export const desiredChangeQuestion: QuestionDefinition = {
+  id: "desiredChange",
+  title: "Wat zou je het liefst anders willen zien?",
+  multiSelect: true,
+  options: [
+    { label: "Meer rust in huis", value: "desired_rust", weights: {} },
+    { label: "Minder strijd", value: "desired_minder_strijd", weights: {} },
+    { label: "Meer verbinding", value: "desired_verbinding", weights: {} },
+    { label: "Meer vertrouwen in mezelf", value: "desired_vertrouwen", weights: {} },
+    { label: "Sneller weten wat werkt", value: "desired_weten", weights: {} },
+    { label: "Meer plezier in opvoeden", value: "desired_plezier", weights: {} },
   ],
 };
 
